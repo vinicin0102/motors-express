@@ -62,12 +62,12 @@ class DashboardScreen extends StatelessWidget {
                     const Text('Lucro hoje', style: TextStyle(color: Colors.white70, fontSize: 14)),
                   ]),
                   const SizedBox(height: 16),
-                  const Text('R\$ 187,50', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w800, letterSpacing: -2)),
+                  const Text('R\$ 0,00', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w800, letterSpacing: -2)),
                   const SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
-                    child: const Text('↑ 23% vs ontem', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+                    child: const Text('Aguardando corridas...', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
                   ),
                 ]),
               ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1),
@@ -76,21 +76,21 @@ class DashboardScreen extends StatelessWidget {
 
               // Stats Grid
               Row(children: [
-                Expanded(child: _statCard('🚗', 'Corridas', '12', AppColors.neonCyan, 300)),
+                Expanded(child: _statCard('🚗', 'Corridas', '0', AppColors.neonCyan, 300)),
                 const SizedBox(width: 12),
-                Expanded(child: _statCard('📏', 'Km rodados', '48.5', AppColors.neonGreen, 400)),
+                Expanded(child: _statCard('📏', 'Km rodados', '0.0', AppColors.neonGreen, 400)),
               ]),
               const SizedBox(height: 12),
               Row(children: [
-                Expanded(child: _statCard('⛽', 'Combustível', 'R\$ 32,40', AppColors.neonOrange, 500)),
+                Expanded(child: _statCard('⛽', 'Combustível', 'R\$ 0,00', AppColors.neonOrange, 500)),
                 const SizedBox(width: 12),
-                Expanded(child: _statCard('💰', 'R\$/km', '1,52', AppColors.neonPurple, 600)),
+                Expanded(child: _statCard('💰', 'R\$/km', '0,00', AppColors.neonPurple, 600)),
               ]),
               const SizedBox(height: 12),
               Row(children: [
-                Expanded(child: _statCard('✅', 'Aceitas', '8', AppColors.success, 700)),
+                Expanded(child: _statCard('✅', 'Aceitas', '0', AppColors.success, 700)),
                 const SizedBox(width: 12),
-                Expanded(child: _statCard('❌', 'Recusadas', '4', AppColors.error, 800)),
+                Expanded(child: _statCard('❌', 'Recusadas', '0', AppColors.error, 800)),
               ]),
 
               const SizedBox(height: 24),
@@ -100,12 +100,12 @@ class DashboardScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // AI Insights
-              Text('💡 Insights IA', style: Theme.of(context).textTheme.headlineMedium).animate().fadeIn(delay: 1000.ms),
+              // Getting Started Tips
+              Text('🚀 Primeiros Passos', style: Theme.of(context).textTheme.headlineMedium).animate().fadeIn(delay: 1000.ms),
               const SizedBox(height: 12),
-              _insightCard('🕐', 'Entre 18h e 21h sua média aumenta 28%.', AppColors.neonCyan, 1100),
-              _insightCard('📍', 'Região Centro-Sul tem corridas mais lucrativas.', AppColors.neonGreen, 1200),
-              _insightCard('📊', '85% das corridas analisadas foram boas.', AppColors.neonPurple, 1300),
+              _tipCard('🔔', 'Ative o Serviço de Acessibilidade nas configurações para receber análises automáticas.', AppColors.neonCyan, 1100),
+              _tipCard('🏍️', 'Configure seu veículo para cálculos de custo mais precisos.', AppColors.neonGreen, 1200),
+              _tipCard('📱', 'Abra o Uber, 99 ou InDrive e aguarde uma corrida apitar. O Driver AI analisará instantaneamente!', AppColors.neonPurple, 1300),
 
               const SizedBox(height: 24),
 
@@ -151,7 +151,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Widget _goalProgress(BuildContext context) {
-    const progress = 0.68;
+    const progress = 0.0;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -165,7 +165,7 @@ class DashboardScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
-            child: const Text('68%', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 13)),
+            child: const Text('0%', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 13)),
           ),
         ]),
         const SizedBox(height: 16),
@@ -179,16 +179,14 @@ class DashboardScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('R\$ 187,50 / R\$ 280,00', style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
-          Text('Faltam R\$ 92,50', style: TextStyle(color: AppColors.neonCyan, fontSize: 13, fontWeight: FontWeight.w600)),
+          Text('R\$ 0,00 / R\$ 0,00', style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
+          Text('Configure suas metas', style: TextStyle(color: AppColors.neonCyan, fontSize: 13, fontWeight: FontWeight.w600)),
         ]),
-        const SizedBox(height: 8),
-        Text('≈ 6 corridas boas restantes', style: TextStyle(color: AppColors.textTertiary, fontSize: 12)),
       ]),
     ).animate().fadeIn(delay: 900.ms);
   }
 
-  Widget _insightCard(String emoji, String text, Color color, int delay) {
+  Widget _tipCard(String emoji, String text, Color color, int delay) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(16),

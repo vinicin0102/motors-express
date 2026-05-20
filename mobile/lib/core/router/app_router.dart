@@ -5,6 +5,7 @@ import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/vehicle/presentation/screens/vehicle_setup_screen.dart';
+import '../../features/onboarding/presentation/screens/permissions_setup_screen.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../features/dashboard/presentation/screens/main_shell_screen.dart';
 import '../../features/statistics/presentation/screens/statistics_screen.dart';
@@ -21,6 +22,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/login', builder: (_, __) => const LoginScreen()),
       GoRoute(path: '/register', builder: (_, __) => const RegisterScreen()),
       GoRoute(path: '/vehicle-setup', builder: (_, __) => const VehicleSetupScreen()),
+      GoRoute(path: '/permissions-setup', builder: (_, __) => const PermissionsSetupScreen()),
       GoRoute(path: '/subscription', builder: (_, __) => const SubscriptionScreen()),
 
       // Main app shell with bottom nav

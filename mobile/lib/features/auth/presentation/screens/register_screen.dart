@@ -16,15 +16,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   final _cityCtrl = TextEditingController();
-  String _platform = 'UBER';
+  final Set<String> _selectedPlatforms = {'UBER'};
   bool _obscure = true;
   bool _loading = false;
 
   final _platforms = [
-    {'value': 'UBER', 'label': 'Uber', 'icon': Icons.local_taxi},
-    {'value': 'NINETY_NINE', 'label': '99', 'icon': Icons.directions_car},
-    {'value': 'INDRIVE', 'label': 'InDrive', 'icon': Icons.car_rental},
-    {'value': 'OTHER', 'label': 'Outros', 'icon': Icons.more_horiz},
+    {'value': 'UBER', 'label': 'Uber', 'icon': Icons.local_taxi, 'color': const Color(0xFF000000)},
+    {'value': 'NINETY_NINE', 'label': '99', 'icon': Icons.directions_car, 'color': const Color(0xFFFFD600)},
+    {'value': 'INDRIVE', 'label': 'InDrive', 'icon': Icons.car_rental, 'color': const Color(0xFF2ECC71)},
+    {'value': 'IFOOD', 'label': 'iFood', 'icon': Icons.delivery_dining, 'color': const Color(0xFFEA1D2C)},
+    {'value': 'RAPPI', 'label': 'Rappi', 'icon': Icons.fastfood, 'color': const Color(0xFFFF6600)},
+    {'value': 'OTHER', 'label': 'Outros', 'icon': Icons.more_horiz, 'color': const Color(0xFF9E9E9E)},
   ];
 
   @override
@@ -76,15 +78,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 _buildField('Cidade', _cityCtrl, Icons.location_city_outlined, 'São Paulo', delay: 600),
 
-                // Platform selector
-                _buildLabel('Plataforma principal', 700),
+                // Platform multi-selector
+                _buildLabel('Plataformas que você usa', 700),
+                const SizedBox(height: 4),
+                Text(
+                  'Selecione todas as plataformas que você trabalha',
+                  style: TextStyle(color: AppColors.textTertiary, fontSize: 12),
+                ).animate().fadeIn(delay: 700.ms),
                 const SizedBox(height: 12),
                 Wrap(
                   spacing: 10, runSpacing: 10,
                   children: _platforms.map((p) {
-                    final selected = _platform == p['value'];
+                    final selected = _selectedPlatforms.contains(p['value']);
                     return GestureDetector(
-                      onTap: () => setState(() => _platform = p['value'] as String),
+                      onTap: () {
+                        setState(() {
+                          if (selected) {
+                            _selectedPlatforms.remove(p['value']);
+                          } else {
+                            _selectedPlatforms.add(p['value'] as String);
+                          }
+                        });
+                      },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -94,7 +109,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           border: Border.all(color: selected ? AppColors.primary : Colors.white.withOpacity(0.08), width: selected ? 2 : 1),
                         ),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
-                          Icon(p['icon'] as IconData, size: 20, color: selected ? AppColors.neonCyan : AppColors.textTertiary),
+                          // Checkbox visual
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            width: 22, height: 22,
+                            decoration: BoxDecoration(
+                              color: selected ? AppColors.success : Colors.transparent,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: selected ? AppColors.success : AppColors.textTertiary, width: 2),
+                            ),
+                            child: selected ? const Icon(Icons.check, size: 14, color: Colors.white) : null,
+                          ),
+                          const SizedBox(width: 10),
+                          Icon(p['icon'] as IconData, size: 20, color: selected ? (p['color'] as Color) : AppColors.textTertiary),
                           const SizedBox(width: 8),
                           Text(p['label'] as String, style: TextStyle(color: selected ? AppColors.textPrimary : AppColors.textSecondary, fontWeight: selected ? FontWeight.w600 : FontWeight.w400)),
                         ]),
@@ -102,6 +129,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     );
                   }).toList(),
                 ).animate().fadeIn(delay: 700.ms),
+
+                if (_selectedPlatforms.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.success.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.success.withOpacity(0.3)),
+                    ),
+                    child: Row(children: [
+                      const Icon(Icons.check_circle, color: AppColors.success, size: 18),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${_selectedPlatforms.length} plataforma${_selectedPlatforms.length > 1 ? 's' : ''} selecionada${_selectedPlatforms.length > 1 ? 's' : ''}',
+                        style: const TextStyle(color: AppColors.success, fontSize: 13, fontWeight: FontWeight.w600),
+                      ),
+                    ]),
+                  ).animate().fadeIn(),
+                ],
 
                 const SizedBox(height: 32),
 
@@ -158,6 +205,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
+    if (_selectedPlatforms.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Selecione pelo menos 1 plataforma'), backgroundColor: AppColors.error),
+      );
+      return;
+    }
     setState(() => _loading = true);
     await Future.delayed(const Duration(seconds: 1));
     if (mounted) { setState(() => _loading = false); context.go('/vehicle-setup'); }

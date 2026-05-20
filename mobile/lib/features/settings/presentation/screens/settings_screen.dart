@@ -1,10 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_theme.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver {
+  bool _overlayActive = false;
+  bool _accessibilityActive = false;
+
+  static const _channel = MethodChannel('com.driverai.app/permissions');
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _checkStatus();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _checkStatus();
+  }
+
+  Future<void> _checkStatus() async {
+    try {
+      final overlay = await _channel.invokeMethod<bool>('checkOverlayPermission') ?? false;
+      final accessibility = await _channel.invokeMethod<bool>('checkAccessibilityPermission') ?? false;
+      if (mounted) setState(() { _overlayActive = overlay; _accessibilityActive = accessibility; });
+    } catch (e) { /* channel not available */ }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +107,32 @@ class SettingsScreen extends StatelessWidget {
           _item(Icons.lock_outline, 'Segurança', 700),
 
           const SizedBox(height: 16),
-          _section('App'),
-          _item(Icons.accessibility_new, 'Serviço de acessibilidade', 800),
-          _item(Icons.layers_outlined, 'Overlay flutuante', 900),
+          _section('Copiloto IA'),
+
+          // Accessibility Service - with status
+          _permissionItem(
+            icon: Icons.accessibility_new,
+            label: 'Serviço de Acessibilidade',
+            active: _accessibilityActive,
+            onTap: () async {
+              try { await _channel.invokeMethod('requestAccessibilityPermission'); } catch (e) {}
+            },
+            delay: 800,
+          ),
+
+          // Overlay - with status
+          _permissionItem(
+            icon: Icons.layers_outlined,
+            label: 'Overlay flutuante',
+            active: _overlayActive,
+            onTap: () async {
+              try { await _channel.invokeMethod('requestOverlayPermission'); } catch (e) {}
+            },
+            delay: 900,
+          ),
+
+          const SizedBox(height: 16),
+          _section('Social'),
           _item(Icons.share_outlined, 'Indicar amigos', 1000),
           _item(Icons.card_giftcard, 'Cupom de desconto', 1100),
 
@@ -82,7 +141,7 @@ class SettingsScreen extends StatelessWidget {
           _item(Icons.help_outline, 'Ajuda', 1200),
           _item(Icons.privacy_tip_outlined, 'Política de privacidade', 1300),
           _item(Icons.description_outlined, 'Termos de uso', 1400),
-          _item(Icons.info_outline, 'Versão 1.0.0', 1500),
+          _item(Icons.info_outline, 'Versão 1.1.0', 1500),
 
           const SizedBox(height: 24),
           SizedBox(width: double.infinity, height: 52, child: OutlinedButton.icon(
@@ -113,4 +172,27 @@ class SettingsScreen extends StatelessWidget {
       onTap: () {},
     ),
   ).animate().fadeIn(delay: Duration(milliseconds: delay));
+
+  Widget _permissionItem({required IconData icon, required String label, required bool active, required VoidCallback onTap, required int delay}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+        leading: Icon(icon, color: active ? AppColors.success : AppColors.textSecondary, size: 22),
+        title: Text(label, style: const TextStyle(color: AppColors.textPrimary, fontSize: 15)),
+        trailing: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: active ? AppColors.success.withOpacity(0.15) : AppColors.error.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            active ? 'Ativo' : 'Inativo',
+            style: TextStyle(color: active ? AppColors.success : AppColors.error, fontSize: 12, fontWeight: FontWeight.w700),
+          ),
+        ),
+        onTap: onTap,
+      ),
+    ).animate().fadeIn(delay: Duration(milliseconds: delay));
+  }
 }

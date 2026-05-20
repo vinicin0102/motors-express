@@ -20,6 +20,7 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
   final _weeklyGoalCtrl = TextEditingController();
   final _monthlyGoalCtrl = TextEditingController();
   String _fuelType = 'GASOLINE';
+  String _vehicleType = 'CAR'; // CAR or MOTO
   bool _loading = false;
 
   final _fuels = [
@@ -32,6 +33,7 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isMoto = _vehicleType == 'MOTO';
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -57,18 +59,28 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
               Text('Precisamos dessas informações para calcular seus custos', style: Theme.of(context).textTheme.bodyLarge).animate().fadeIn(delay: 100.ms),
               const SizedBox(height: 32),
 
+              // Vehicle Type Selector
+              _sectionTitle('🚘 Tipo de Veículo', 150),
+              const SizedBox(height: 12),
+              Row(children: [
+                Expanded(child: _vehicleTypeCard('CAR', '🚗', 'Carro', 200)),
+                const SizedBox(width: 12),
+                Expanded(child: _vehicleTypeCard('MOTO', '🏍️', 'Moto', 300)),
+              ]),
+              const SizedBox(height: 24),
+
               // Vehicle section
-              _sectionTitle('🚗 Veículo', 200),
+              _sectionTitle(isMoto ? '🏍️ Moto' : '🚗 Veículo', 400),
               const SizedBox(height: 16),
               Row(children: [
-                Expanded(child: _input('Marca', _brandCtrl, Icons.directions_car, 'Toyota', 300)),
+                Expanded(child: _input('Marca', _brandCtrl, isMoto ? Icons.two_wheeler : Icons.directions_car, isMoto ? 'Honda' : 'Toyota', 500)),
                 const SizedBox(width: 12),
-                Expanded(child: _input('Modelo', _modelCtrl, Icons.car_repair, 'Corolla', 400)),
+                Expanded(child: _input('Modelo', _modelCtrl, Icons.car_repair, isMoto ? 'CG 160' : 'Corolla', 600)),
               ]),
-              _input('Ano', _yearCtrl, Icons.calendar_today, '2022', 500, type: TextInputType.number),
+              _input('Ano', _yearCtrl, Icons.calendar_today, '2022', 700, type: TextInputType.number),
 
               // Fuel type
-              _sectionTitle('⛽ Combustível', 600),
+              _sectionTitle('⛽ Combustível', 800),
               const SizedBox(height: 12),
               Wrap(spacing: 8, runSpacing: 8, children: _fuels.map((f) {
                 final sel = _fuelType == f['value'];
@@ -89,13 +101,13 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
                     ]),
                   ),
                 );
-              }).toList()).animate().fadeIn(delay: 600.ms),
+              }).toList()).animate().fadeIn(delay: 800.ms),
 
               const SizedBox(height: 20),
               Row(children: [
-                Expanded(child: _input('Consumo (km/l)', _consumptionCtrl, Icons.speed, '12', 700, type: TextInputType.number)),
+                Expanded(child: _input('Consumo (km/l)', _consumptionCtrl, Icons.speed, isMoto ? '35' : '12', 900, type: TextInputType.number)),
                 const SizedBox(width: 12),
-                Expanded(child: _input('R\$/litro', _fuelPriceCtrl, Icons.attach_money, '5.89', 800, type: TextInputType.number)),
+                Expanded(child: _input('R\$/litro', _fuelPriceCtrl, Icons.attach_money, '5.89', 1000, type: TextInputType.number)),
               ]),
 
               // Cost Preview
@@ -119,11 +131,11 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
                 ),
 
               // Goals
-              _sectionTitle('🎯 Metas', 900),
+              _sectionTitle('🎯 Metas', 1100),
               const SizedBox(height: 16),
-              _input('Meta diária (R\$)', _dailyGoalCtrl, Icons.today, '200', 1000, type: TextInputType.number),
-              _input('Meta semanal (R\$)', _weeklyGoalCtrl, Icons.date_range, '1000', 1100, type: TextInputType.number),
-              _input('Meta mensal (R\$)', _monthlyGoalCtrl, Icons.calendar_month, '4000', 1200, type: TextInputType.number),
+              _input('Meta diária (R\$)', _dailyGoalCtrl, Icons.today, isMoto ? '150' : '200', 1200, type: TextInputType.number),
+              _input('Meta semanal (R\$)', _weeklyGoalCtrl, Icons.date_range, isMoto ? '750' : '1000', 1300, type: TextInputType.number),
+              _input('Meta mensal (R\$)', _monthlyGoalCtrl, Icons.calendar_month, isMoto ? '3000' : '4000', 1400, type: TextInputType.number),
 
               const SizedBox(height: 24),
               SizedBox(width: double.infinity, height: 56, child: Container(
@@ -135,7 +147,7 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
                     ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                     : const Text('Salvar e continuar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                 ),
-              )).animate().fadeIn(delay: 1300.ms),
+              )).animate().fadeIn(delay: 1500.ms),
 
               const SizedBox(height: 32),
             ])),
@@ -143,6 +155,42 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
         ),
       ),
     );
+  }
+
+  Widget _vehicleTypeCard(String value, String emoji, String label, int delay) {
+    final selected = _vehicleType == value;
+    return GestureDetector(
+      onTap: () => setState(() => _vehicleType = value),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary.withOpacity(0.15) : AppColors.bgCard,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: selected ? AppColors.primary : Colors.white.withOpacity(0.08),
+            width: selected ? 2 : 1,
+          ),
+          boxShadow: selected ? [BoxShadow(color: AppColors.primary.withOpacity(0.2), blurRadius: 16)] : [],
+        ),
+        child: Column(children: [
+          Text(emoji, style: const TextStyle(fontSize: 36)),
+          const SizedBox(height: 8),
+          Text(label, style: TextStyle(
+            color: selected ? AppColors.textPrimary : AppColors.textSecondary,
+            fontSize: 16, fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+          )),
+          if (selected) ...[
+            const SizedBox(height: 6),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.3), borderRadius: BorderRadius.circular(8)),
+              child: const Text('Selecionado', style: TextStyle(color: AppColors.neonCyan, fontSize: 11, fontWeight: FontWeight.w600)),
+            ),
+          ],
+        ]),
+      ),
+    ).animate().fadeIn(delay: Duration(milliseconds: delay)).scale(begin: const Offset(0.95, 0.95));
   }
 
   String _calcCostPerKm() {
@@ -169,6 +217,6 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
   void _handleSave() async {
     setState(() => _loading = true);
     await Future.delayed(const Duration(seconds: 1));
-    if (mounted) { setState(() => _loading = false); context.go('/dashboard'); }
+    if (mounted) { setState(() => _loading = false); context.go('/permissions-setup'); }
   }
 }
