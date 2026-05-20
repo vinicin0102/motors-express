@@ -28,6 +28,14 @@ jobs:
           flutter-version: '3.19.0'
           channel: 'stable'
 
+      - name: Create Android Shell
+        working-directory: ./mobile
+        run: |
+          flutter create --platforms=android --org com.driverai --project-name app .
+          mkdir -p android/app/src/main/res/xml
+          cp custom_manifest/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          cp custom_manifest/accessibility_service_config.xml android/app/src/main/res/xml/accessibility_service_config.xml
+
       - name: Get Dependencies
         working-directory: ./mobile
         run: flutter pub get
