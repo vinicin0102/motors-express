@@ -33,12 +33,12 @@ jobs:
         run: |
           flutter create --platforms=android --org com.driverai --project-name driver_ai .
           mkdir -p android/app/src/main/res/xml
-          mkdir -p android/app/src/main/kotlin/com/driverai/app
           cp custom_manifest/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
           cp custom_manifest/accessibility_service_config.xml android/app/src/main/res/xml/accessibility_service_config.xml
-          cp android/app/src/main/kotlin/com/driverai/app/MainActivity.kt android/app/src/main/kotlin/com/driverai/driver_ai/MainActivity.kt || true
-          cp android/app/src/main/kotlin/com/driverai/app/RideDetectorService.kt android/app/src/main/kotlin/com/driverai/driver_ai/RideDetectorService.kt || true
-          cp android/app/src/main/kotlin/com/driverai/app/OverlayManager.kt android/app/src/main/kotlin/com/driverai/driver_ai/OverlayManager.kt || true
+          # Remove flutter-generated MainActivity and use our custom Kotlin files
+          rm -rf android/app/src/main/kotlin/com/driverai/driver_ai
+          mkdir -p android/app/src/main/kotlin/com/driverai/app
+          # Our custom files are already in the correct location from the repo
 
       - name: Patch Android SDK Versions
         working-directory: ./mobile
