@@ -31,10 +31,23 @@ jobs:
       - name: Create Android Shell
         working-directory: ./mobile
         run: |
-          flutter create --platforms=android --org com.driverai --project-name app .
+          flutter create --platforms=android --org com.driverai --project-name driver_ai .
           mkdir -p android/app/src/main/res/xml
+          mkdir -p android/app/src/main/kotlin/com/driverai/app
           cp custom_manifest/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
           cp custom_manifest/accessibility_service_config.xml android/app/src/main/res/xml/accessibility_service_config.xml
+
+      - name: Patch Android SDK Versions
+        working-directory: ./mobile
+        run: |
+          sed -i 's/minSdkVersion .*/minSdkVersion 23/' android/app/build.gradle
+          sed -i 's/compileSdkVersion .*/compileSdkVersion 34/' android/app/build.gradle
+          sed -i 's/targetSdkVersion .*/targetSdkVersion 34/' android/app/build.gradle
+          sed -i "s/minSdk = .*/minSdk = 23/" android/app/build.gradle
+          sed -i "s/compileSdk = .*/compileSdk = 34/" android/app/build.gradle
+          sed -i "s/targetSdk = .*/targetSdk = 34/" android/app/build.gradle
+          echo "--- build.gradle after patch ---"
+          cat android/app/build.gradle
 
       - name: Get Dependencies
         working-directory: ./mobile
