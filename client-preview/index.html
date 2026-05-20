@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Driver AI - Aplicativo do Motorista">
+    <title>Driver AI - Mobile Web App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- App Container (Smartphone Frame Mockup) -->
+    <div class="phone-mockup">
+        <div class="phone-screen">
+            <!-- Floating Overlay Notification Container -->
+            <div id="ride-overlay" class="ride-overlay hidden">
+                <div class="overlay-header">
+                    <span id="overlay-platform">🚗 Uber</span>
+                    <button class="overlay-close" onclick="dismissOverlay()">✕</button>
+                </div>
+                <div class="overlay-body">
+                    <div class="overlay-km-rate" id="overlay-km-rate">💰 R$ 2,15/km</div>
+                    <div class="overlay-profit" id="overlay-profit">⛽ Lucro estimado: R$ 18,40</div>
+                    <div class="overlay-badge-row">
+                        <span class="overlay-badge success" id="overlay-badge">🟢 COMPENSA</span>
+                        <span class="overlay-details" id="overlay-details">R$ 28,00 • 13km</span>
+                    </div>
+                </div>
+                <div class="overlay-actions">
+                    <button class="btn-overlay-accept" onclick="acceptRideSim()">Aceitar Corrida</button>
+                    <button class="btn-overlay-reject" onclick="rejectRideSim()">Recusar</button>
+                </div>
+            </div>
+
+            <!-- Screen 1: Splash -->
+            <div class="screen active" id="screen-splash">
+                <div class="splash-content">
+                    <div class="logo-box">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+                    </div>
+                    <h1>Driver AI</h1>
+                    <p class="tagline">Seu copiloto inteligente</p>
+                    <div class="loader"></div>
+                </div>
+            </div>
+
+            <!-- Screen 2: Login -->
+            <div class="screen" id="screen-login">
+                <div class="auth-container">
+                    <div class="logo-sm">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+                    </div>
+                    <h2>Entrar</h2>
+                    <p class="subtitle">Bem-vindo de volta copiloto</p>
+
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" placeholder="seu@email.com" value="motorista@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" placeholder="••••••••" value="123456">
+                    </div>
+
+                    <button class="btn-submit" onclick="navigate('dashboard')">Entrar</button>
+                    <div class="auth-footer">
+                        <span>Não tem conta? <a href="#" onclick="navigate('register')">Cadastre-se</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Register -->
+            <div class="screen" id="screen-register">
+                <div class="auth-container">
+                    <h2>Criar Conta</h2>
+                    <p class="subtitle">Cadastre-se para começar a faturar mais</p>
+
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" placeholder="Seu Nome">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Cidade</label>
+                        <input type="text" placeholder="Ex: São Paulo">
+                    </div>
+                    <div class="form-group">
+                        <label>Plataforma Principal</label>
+                        <select id="register-platform">
+                            <option value="UBER">Uber</option>
+                            <option value="NINETY_NINE">99</option>
+                            <option value="INDRIVE">InDrive</option>
+                            <option value="OTHER">Outros</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-submit" onclick="navigate('vehicle')">Continuar</button>
+                    <div class="auth-footer">
+                        <span>Já tem conta? <a href="#" onclick="navigate('login')">Faça login</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 4: Vehicle Setup -->
+            <div class="screen" id="screen-vehicle">
+                <div class="auth-container scrollable">
+                    <h2>Veículo & Metas</h2>
+                    <p class="subtitle">Defina seus custos e metas diárias</p>
+
+                    <div class="form-group">
+                        <label>Marca e Modelo</label>
+                        <input type="text" id="veh-model" placeholder="Toyota Corolla" value="Toyota Corolla">
+                    </div>
+                    <div class="form-group">
+                        <label>Combustível</label>
+                        <select id="veh-fuel" onchange="calculateOperCost()">
+                            <option value="GASOLINE">Gasolina</option>
+                            <option value="ETHANOL">Etanol</option>
+                            <option value="CNG">GNV</option>
+                            <option value="DIESEL">Diesel</option>
+                            <option value="ELECTRIC">Elétrico</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Consumo (km/l)</label>
+                            <input type="number" id="veh-cons" value="12" step="0.1" oninput="calculateOperCost()">
+                        </div>
+                        <div class="form-group">
+                            <label>Preço Combustível</label>
+                            <input type="number" id="veh-price" value="5.89" step="0.01" oninput="calculateOperCost()">
+                        </div>
+                    </div>
+
+                    <div class="cost-preview-box">
+                        <span class="cost-title">Custo Operacional Estimado</span>
+                        <span class="cost-value" id="oper-cost-val">R$ 0,49 / km</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Meta Diária (R$)</label>
+                        <input type="number" id="goal-daily" value="280">
+                    </div>
+
+                    <button class="btn-submit" onclick="saveVehicleAndGo()">Salvar e Acessar App</button>
+                </div>
+            </div>
+
+            <!-- Screen 5: Dashboard -->
+            <div class="screen" id="screen-dashboard">
+                <div class="app-header">
+                    <div class="profile-info">
+                        <div class="avatar">M</div>
+                        <div>
+                            <h3>Olá, Marcos 👋</h3>
+                            <span>Plano PRO ativo</span>
+                        </div>
+                    </div>
+                    <button class="btn-premium-badge" onclick="navigate('subscription')">PRO</button>
+                </div>
+
+                <div class="app-body scrollable">
+                    <!-- Main Earnings Card -->
+                    <div class="earnings-card">
+                        <span class="card-label">Lucro estimado hoje</span>
+                        <h2 class="card-value" id="dash-profit">R$ 187,50</h2>
+                        <span class="card-trend">↑ 23% melhor que ontem</span>
+                    </div>
+
+                    <!-- Simulate offer CTA -->
+                    <div class="simulator-box">
+                        <h4>Copiloto Ativo 🤖</h4>
+                        <p>Simule o recebimento de uma corrida para ver a inteligência artificial do app e o overlay flutuante em ação.</p>
+                        <div class="sim-buttons">
+                            <button class="btn-sim positive" onclick="simulateRide(true)">👍 Corrida Excelente</button>
+                            <button class="btn-sim negative" onclick="simulateRide(false)">👎 Corrida Ruim</button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats Grid -->
+                    <div class="stats-grid-2">
+                        <div class="stat-card-2">
+                            <span class="icon">🚗</span>
+                            <span class="num">12</span>
+                            <span class="lbl">Corridas</span>
+                        </div>
+                        <div class="stat-card-2">
+                            <span class="icon">📏</span>
+                            <span class="num">48.5</span>
+                            <span class="lbl">Km Rodados</span>
+                        </div>
+                        <div class="stat-card-2">
+                            <span class="icon">⛽</span>
+                            <span class="num" id="dash-fuel">R$ 32,40</span>
+                            <span class="lbl">Combustível</span>
+                        </div>
+                        <div class="stat-card-2">
+                            <span class="icon">💰</span>
+                            <span class="num">1,52</span>
+                            <span class="lbl">Média R$/km</span>
+                        </div>
+                    </div>
+
+                    <!-- Daily Goal Tracker -->
+                    <div class="goal-tracker-card">
+                        <div class="goal-header">
+                            <span>🎯 Meta Diária</span>
+                            <span class="goal-pct">68%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 68%;"></div>
+                        </div>
+                        <div class="goal-desc">
+                            <span>R$ 187,50 / R$ 280,00</span>
+                            <span class="goal-remain">Faltam R$ 92,50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 6: Statistics -->
+            <div class="screen" id="screen-statistics">
+                <div class="app-header">
+                    <h2>Estatísticas</h2>
+                </div>
+                <div class="app-body scrollable">
+                    <div class="chart-box">
+                        <h4>Ganhos da Semana</h4>
+                        <div class="chart-bars-mini">
+                            <div class="chart-bar-col"><div class="bar-fill" style="height: 60%;"></div><span>Seg</span></div>
+                            <div class="chart-bar-col"><div class="bar-fill" style="height: 80%;"></div><span>Ter</span></div>
+                            <div class="chart-bar-col"><div class="bar-fill" style="height: 45%;"></div><span>Qua</span></div>
+                            <div class="chart-bar-col"><div class="bar-fill highlight" style="height: 95%;"></div><span>Qui</span></div>
+                            <div class="chart-bar-col"><div class="bar-fill highlight" style="height: 70%;"></div><span>Sex</span></div>
+                            <div class="chart-bar-col"><div class="bar-fill" style="height: 30%;"></div><span>Sáb</span></div>
+                        </div>
+                    </div>
+
+                    <div class="stat-list">
+                        <div class="stat-list-item">
+                            <span>Receita Total</span>
+                            <strong class="cyan">R$ 1.247,80</strong>
+                        </div>
+                        <div class="stat-list-item">
+                            <span>Lucro Líquido</span>
+                            <strong class="green">R$ 982,40</strong>
+                        </div>
+                        <div class="stat-list-item">
+                            <span>Distância Total</span>
+                            <strong>312,5 km</strong>
+                        </div>
+                        <div class="stat-list-item">
+                            <span>Combustível Gasto</span>
+                            <strong class="red">R$ 265,40</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 7: Goals -->
+            <div class="screen" id="screen-goals">
+                <div class="app-header">
+                    <h2>Metas</h2>
+                </div>
+                <div class="app-body scrollable">
+                    <div class="goal-item-card">
+                        <div class="goal-item-header">
+                            <span>Meta Diária</span>
+                            <span class="green">68%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 68%;"></div></div>
+                        <div class="goal-item-footer">
+                            <span>R$ 187,50 / R$ 280,00</span>
+                            <strong>Falta R$ 92,50</strong>
+                        </div>
+                    </div>
+
+                    <div class="goal-item-card">
+                        <div class="goal-item-header">
+                            <span>Meta Semanal</span>
+                            <span class="cyan">60%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 60%; background: var(--neon-cyan);"></div></div>
+                        <div class="goal-item-footer">
+                            <span>R$ 842,30 / R$ 1.400,00</span>
+                            <strong>Falta R$ 557,70</strong>
+                        </div>
+                    </div>
+
+                    <div class="goal-item-card">
+                        <div class="goal-item-header">
+                            <span>Meta Mensal</span>
+                            <span class="purple">58%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 58%; background: var(--neon-purple);"></div></div>
+                        <div class="goal-item-footer">
+                            <span>R$ 3.250,00 / R$ 5.600,00</span>
+                            <strong>Falta R$ 2.350,00</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 8: History -->
+            <div class="screen" id="screen-history">
+                <div class="app-header">
+                    <h2>Histórico</h2>
+                </div>
+                <div class="app-body scrollable">
+                    <div id="history-list" class="history-list">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 9: Settings -->
+            <div class="screen" id="screen-settings">
+                <div class="app-header">
+                    <h2>Configurações</h2>
+                </div>
+                <div class="app-body scrollable">
+                    <div class="settings-profile-card">
+                        <div class="avatar-lg">M</div>
+                        <h4>Marcos Silva</h4>
+                        <span>motorista@email.com</span>
+                    </div>
+
+                    <div class="settings-menu">
+                        <div class="menu-item" onclick="navigate('subscription')">
+                            <span>💎 Plano Atual</span>
+                            <strong>PRO</strong>
+                        </div>
+                        <div class="menu-item" onclick="navigate('vehicle')">
+                            <span>🚗 Editar Custos & Veículo</span>
+                            <span>➔</span>
+                        </div>
+                        <div class="menu-item">
+                            <span>🔔 Notificações</span>
+                            <span>Ativadas</span>
+                        </div>
+                        <div class="menu-item" onclick="navigate('login')">
+                            <span class="red">Logout</span>
+                            <span>➔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 10: Subscription Paywall -->
+            <div class="screen" id="screen-subscription">
+                <div class="paywall-container scrollable">
+                    <button class="btn-close-paywall" onclick="navigate('dashboard')">✕</button>
+                    <span class="emoji-hero">🚀</span>
+                    <h2>Aumente seus ganhos com Inteligência Artificial</h2>
+                    <p class="paywall-sub">Pare de aceitar corridas ruins. Descubra instantaneamente quais corridas realmente compensam financeiramente.</p>
+
+                    <!-- Plan comparison -->
+                    <div class="plan-card pro">
+                        <div class="plan-badge">RECOMENDADO</div>
+                        <h3>Plano PRO</h3>
+                        <div class="plan-price">R$ 19,90<span>/mês</span></div>
+                        <ul>
+                            <li>🟢 Análise automática em tempo real</li>
+                            <li>🟢 Overlay flutuante inteligente</li>
+                            <li>🟢 Insights estratégicos de IA</li>
+                            <li>🟢 Histórico ilimitado</li>
+                        </ul>
+                        <button class="btn-paywall-action" onclick="upgradeToPro()">Começar Teste Grátis de 7 Dias</button>
+                    </div>
+
+                    <div class="plan-card premium">
+                        <h3>Plano PREMIUM</h3>
+                        <div class="plan-price">R$ 49,90<span>/mês</span></div>
+                        <ul>
+                            <li>👑 Tudo do plano PRO</li>
+                            <li>👑 Previsão de ganhos por IA</li>
+                            <li>👑 Heatmap de demanda real</li>
+                            <li>👑 Suporte prioritário 24/7</li>
+                        </ul>
+                        <button class="btn-paywall-action secondary" onclick="upgradeToPremium()">Assinar Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar (Hidden on auth/splash/paywall) -->
+            <nav class="bottom-nav" id="bottom-nav">
+                <button class="nav-btn active" data-target="dashboard" onclick="navigate('dashboard')">
+                    <span class="nav-icon">📊</span>
+                    <span>Home</span>
+                </button>
+                <button class="nav-btn" data-target="statistics" onclick="navigate('statistics')">
+                    <span class="nav-icon">📈</span>
+                    <span>Stats</span>
+                </button>
+                <button class="nav-btn" data-target="goals" onclick="navigate('goals')">
+                    <span class="nav-icon">🎯</span>
+                    <span>Metas</span>
+                </button>
+                <button class="nav-btn" data-target="history" onclick="navigate('history')">
+                    <span class="nav-icon">📋</span>
+                    <span>Histórico</span>
+                </button>
+                <button class="nav-btn" data-target="settings" onclick="navigate('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Config</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+// Prisma Schema for Driver AI
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── USERS ───────────────────────────────────────────────
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  phone         String?
+  password      String
+  city          String?
+  platform      Platform @default(UBER)
+  role          Role     @default(DRIVER)
+  isActive      Boolean  @default(true)
+  firebaseUid   String?  @unique
+  avatarUrl     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  vehicles      Vehicle[]
+  rides         Ride[]
+  goals         Goal[]
+  subscription  Subscription?
+  usageLogs     UsageLog[]
+  notifications Notification[]
+  referralsSent Referral[]     @relation("ReferralSender")
+  referralsReceived Referral[] @relation("ReferralReceiver")
+  couponUsages  CouponUsage[]
+
+  @@map("users")
+}
+
+enum Platform {
+  UBER
+  NINETY_NINE
+  INDRIVE
+  OTHER
+}
+
+enum Role {
+  DRIVER
+  ADMIN
+}
+
+// ─── VEHICLES ────────────────────────────────────────────
+model Vehicle {
+  id            String     @id @default(uuid())
+  userId        String
+  brand         String
+  model         String
+  year          Int
+  fuelType      FuelType
+  consumption   Float      // km/l
+  fuelPrice     Float      // R$/l
+  costPerKm     Float?     // calculated
+  isActive      Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rides         Ride[]
+
+  @@map("vehicles")
+}
+
+enum FuelType {
+  GASOLINE
+  ETHANOL
+  CNG
+  DIESEL
+  ELECTRIC
+}
+
+// ─── RIDES ───────────────────────────────────────────────
+model Ride {
+  id              String      @id @default(uuid())
+  userId          String
+  vehicleId       String?
+  platform        Platform
+  rideValue       Float       // R$
+  distance        Float       // km
+  duration        Int?        // minutes
+  origin          String?
+  destination     String?
+  valuePerKm      Float       // calculated
+  estimatedProfit Float?      // calculated
+  fuelCost        Float?      // calculated
+  rating          RideRating
+  accepted        Boolean     @default(false)
+  analyzedAt      DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicle         Vehicle?    @relation(fields: [vehicleId], references: [id])
+
+  @@map("rides")
+}
+
+enum RideRating {
+  EXCELLENT
+  GOOD
+  AVERAGE
+  BAD
+}
+
+// ─── GOALS ───────────────────────────────────────────────
+model Goal {
+  id            String    @id @default(uuid())
+  userId        String
+  type          GoalType
+  targetAmount  Float     // R$
+  currentAmount Float     @default(0)
+  period        String?   // e.g. "2024-03-15" for daily
+  isCompleted   Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("goals")
+}
+
+enum GoalType {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+// ─── PLANS ───────────────────────────────────────────────
+model Plan {
+  id              String         @id @default(uuid())
+  name            String         @unique
+  slug            String         @unique
+  description     String?
+  priceMonthly    Float
+  priceYearly     Float
+  features        Json           // array of feature strings
+  maxAnalyses     Int?           // null = unlimited
+  badge           String?
+  isActive        Boolean        @default(true)
+  stripePriceMonthly String?
+  stripePriceYearly  String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  subscriptions   Subscription[]
+
+  @@map("plans")
+}
+
+// ─── SUBSCRIPTIONS ───────────────────────────────────────
+model Subscription {
+  id                String             @id @default(uuid())
+  userId            String             @unique
+  planId            String
+  status            SubscriptionStatus @default(TRIAL)
+  stripeCustomerId  String?
+  stripeSubId       String?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  trialEndsAt       DateTime?
+  cancelledAt       DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan              Plan               @relation(fields: [planId], references: [id])
+  payments          Payment[]
+
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+}
+
+// ─── PAYMENTS ────────────────────────────────────────────
+model Payment {
+  id              String        @id @default(uuid())
+  subscriptionId  String
+  amount          Float
+  currency        String        @default("BRL")
+  stripePaymentId String?
+  status          PaymentStatus @default(PENDING)
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+
+  subscription    Subscription  @relation(fields: [subscriptionId], references: [id])
+
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+// ─── USAGE LOGS ──────────────────────────────────────────
+model UsageLog {
+  id        String   @id @default(uuid())
+  userId    String
+  feature   String
+  count     Int      @default(1)
+  date      DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("usage_logs")
+}
+
+// ─── NOTIFICATIONS ───────────────────────────────────────
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  body      String
+  type      String   @default("info")
+  isRead    Boolean  @default(false)
+  data      Json?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+// ─── COUPONS ─────────────────────────────────────────────
+model Coupon {
+  id              String       @id @default(uuid())
+  code            String       @unique
+  discountType    DiscountType
+  discountValue   Float
+  maxUses         Int?
+  currentUses     Int          @default(0)
+  expiresAt       DateTime?
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+
+  usages          CouponUsage[]
+
+  @@map("coupons")
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+model CouponUsage {
+  id       String   @id @default(uuid())
+  couponId String
+  userId   String
+  usedAt   DateTime @default(now())
+
+  coupon   Coupon   @relation(fields: [couponId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@unique([couponId, userId])
+  @@map("coupon_usages")
+}
+
+// ─── REFERRALS ───────────────────────────────────────────
+model Referral {
+  id          String         @id @default(uuid())
+  senderId    String
+  receiverId  String?
+  code        String         @unique
+  status      ReferralStatus @default(PENDING)
+  rewardDays  Int            @default(7)
+  createdAt   DateTime       @default(now())
+  claimedAt   DateTime?
+
+  sender      User           @relation("ReferralSender", fields: [senderId], references: [id])
+  receiver    User?          @relation("ReferralReceiver", fields: [receiverId], references: [id])
+
+  @@map("referrals")
+}
+
+enum ReferralStatus {
+  PENDING
+  CLAIMED
+  EXPIRED
+}

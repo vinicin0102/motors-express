@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">
+        Driver AI precisa deste serviço para detectar corridas automaticamente
+        nos aplicativos Uber, 99 e InDrive, permitindo análise em tempo real
+        para informar se a corrida compensa financeiramente.
+    </string>
+</resources>

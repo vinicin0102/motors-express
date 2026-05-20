@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Driver AI - Painel Administrativo">
+    <title>Driver AI - Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            </div>
+            <span class="logo-text">Driver AI</span>
+            <span class="logo-badge">Admin</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="users" id="nav-users">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Usuários</span>
+            </a>
+            <a href="#" class="nav-item" data-page="subscriptions" id="nav-subscriptions">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <span>Assinaturas</span>
+            </a>
+            <a href="#" class="nav-item" data-page="analytics" id="nav-analytics">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Analytics</span>
+            </a>
+            <a href="#" class="nav-item" data-page="notifications" id="nav-notifications">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span>Notificações</span>
+            </a>
+            <a href="#" class="nav-item" data-page="coupons" id="nav-coupons">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"/></svg>
+                <span>Cupons</span>
+            </a>
+            <a href="#" class="nav-item" data-page="settings" id="nav-settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-profile">
+                <div class="admin-avatar">A</div>
+                <div class="admin-info">
+                    <span class="admin-name">Admin</span>
+                    <span class="admin-role">Super Admin</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            <div class="topbar-actions">
+                <div class="search-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" placeholder="Buscar..." id="searchInput">
+                </div>
+                <button class="topbar-btn" id="notifBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+                    <span class="notif-badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Page -->
+        <section class="page active" id="page-dashboard">
+            <div class="stats-grid">
+                <div class="stat-card" id="stat-users">
+                    <div class="stat-icon" style="background: rgba(108, 92, 231, 0.15); color: #6C5CE7;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalUsers">1,247</span>
+                        <span class="stat-label">Total Usuários</span>
+                    </div>
+                    <span class="stat-change positive">+12.5%</span>
+                </div>
+                <div class="stat-card" id="stat-active">
+                    <div class="stat-icon" style="background: rgba(0, 230, 118, 0.15); color: #00E676;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="activeUsers">843</span>
+                        <span class="stat-label">Usuários Ativos</span>
+                    </div>
+                    <span class="stat-change positive">+8.3%</span>
+                </div>
+                <div class="stat-card" id="stat-revenue">
+                    <div class="stat-icon" style="background: rgba(0, 229, 255, 0.15); color: #00E5FF;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalRevenue">R$ 24.850</span>
+                        <span class="stat-label">Receita (MRR)</span>
+                    </div>
+                    <span class="stat-change positive">+23.1%</span>
+                </div>
+                <div class="stat-card" id="stat-rides">
+                    <div class="stat-icon" style="background: rgba(187, 134, 252, 0.15); color: #BB86FC;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalRides">45,892</span>
+                        <span class="stat-label">Corridas Analisadas</span>
+                    </div>
+                    <span class="stat-change positive">+15.7%</span>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Chart -->
+                <div class="card chart-card" id="revenueChart">
+                    <div class="card-header">
+                        <h3>Receita mensal</h3>
+                        <div class="card-actions">
+                            <button class="chip active">Mensal</button>
+                            <button class="chip">Semanal</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-bars">
+                            <div class="chart-bar-group"><div class="chart-bar" style="height: 45%"></div><span>Jan</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height: 60%"></div><span>Fev</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height: 55%"></div><span>Mar</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height: 72%"></div><span>Abr</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height: 85%"></div><span>Mai</span></div>
+                            <div class="chart-bar-group highlight"><div class="chart-bar" style="height: 95%"></div><span>Jun</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan Distribution -->
+                <div class="card" id="planDistCard">
+                    <div class="card-header"><h3>Distribuição de Planos</h3></div>
+                    <div class="plan-dist">
+                        <div class="plan-item">
+                            <div class="plan-dot" style="background: #6B7394;"></div>
+                            <span class="plan-name">FREE</span>
+                            <span class="plan-count">682</span>
+                            <div class="plan-bar"><div class="plan-fill" style="width: 55%; background: #6B7394;"></div></div>
+                        </div>
+                        <div class="plan-item">
+                            <div class="plan-dot" style="background: #6C5CE7;"></div>
+                            <span class="plan-name">PRO</span>
+                            <span class="plan-count">428</span>
+                            <div class="plan-bar"><div class="plan-fill" style="width: 34%; background: #6C5CE7;"></div></div>
+                        </div>
+                        <div class="plan-item">
+                            <div class="plan-dot" style="background: #FFD700;"></div>
+                            <span class="plan-name">PREMIUM</span>
+                            <span class="plan-count">137</span>
+                            <div class="plan-bar"><div class="plan-fill" style="width: 11%; background: #FFD700;"></div></div>
+                        </div>
+                    </div>
+                    <div class="conversion-stats">
+                        <div class="conv-item"><span class="conv-label">Conversão FREE→PRO</span><span class="conv-value">18.4%</span></div>
+                        <div class="conv-item"><span class="conv-label">Taxa de retenção</span><span class="conv-value">92.1%</span></div>
+                        <div class="conv-item"><span class="conv-label">Cancelamentos (30d)</span><span class="conv-value">3.2%</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Users -->
+            <div class="card" id="recentUsersCard">
+                <div class="card-header">
+                    <h3>Últimos usuários cadastrados</h3>
+                    <button class="btn-link">Ver todos →</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Usuário</th><th>Email</th><th>Plano</th><th>Plataforma</th><th>Status</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td><div class="user-cell"><div class="avatar-sm">M</div><span>Marcos Silva</span></div></td><td>marcos@email.com</td><td><span class="badge badge-pro">PRO</span></td><td>Uber</td><td><span class="status-dot active"></span>Ativo</td><td><button class="btn-icon" title="Detalhes">👁</button><button class="btn-icon danger" title="Bloquear">🚫</button></td></tr>
+                            <tr><td><div class="user-cell"><div class="avatar-sm">A</div><span>Ana Costa</span></div></td><td>ana@email.com</td><td><span class="badge badge-premium">PREMIUM</span></td><td>99</td><td><span class="status-dot active"></span>Ativo</td><td><button class="btn-icon" title="Detalhes">👁</button><button class="btn-icon danger" title="Bloquear">🚫</button></td></tr>
+                            <tr><td><div class="user-cell"><div class="avatar-sm">P</div><span>Pedro Santos</span></div></td><td>pedro@email.com</td><td><span class="badge badge-free">FREE</span></td><td>InDrive</td><td><span class="status-dot active"></span>Ativo</td><td><button class="btn-icon" title="Detalhes">👁</button><button class="btn-icon danger" title="Bloquear">🚫</button></td></tr>
+                            <tr><td><div class="user-cell"><div class="avatar-sm">J</div><span>Julia Oliveira</span></div></td><td>julia@email.com</td><td><span class="badge badge-pro">PRO</span></td><td>Uber</td><td><span class="status-dot trial"></span>Trial</td><td><button class="btn-icon" title="Detalhes">👁</button><button class="btn-icon danger" title="Bloquear">🚫</button></td></tr>
+                            <tr><td><div class="user-cell"><div class="avatar-sm">R</div><span>Ricardo Lima</span></div></td><td>ricardo@email.com</td><td><span class="badge badge-free">FREE</span></td><td>99</td><td><span class="status-dot inactive"></span>Inativo</td><td><button class="btn-icon" title="Detalhes">👁</button><button class="btn-icon success" title="Desbloquear">✅</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Page -->
+        <section class="page" id="page-users">
+            <div class="page-header"><h2>Gerenciar Usuários</h2><button class="btn-primary" id="exportUsersBtn">📥 Exportar CSV</button></div>
+            <div class="card"><div class="card-header"><h3>Todos os usuários</h3><div class="filters"><select id="planFilter"><option value="">Todos os planos</option><option value="free">FREE</option><option value="pro">PRO</option><option value="premium">PREMIUM</option></select><select id="statusFilter"><option value="">Todos os status</option><option value="active">Ativo</option><option value="trial">Trial</option><option value="inactive">Inativo</option></select></div></div>
+            <div class="table-container"><table><thead><tr><th>Usuário</th><th>Email</th><th>Plano</th><th>Plataforma</th><th>Corridas</th><th>Desde</th><th>Status</th><th>Ações</th></tr></thead><tbody id="allUsersTable"></tbody></table></div></div>
+        </section>
+
+        <!-- Subscriptions Page -->
+        <section class="page" id="page-subscriptions">
+            <div class="page-header"><h2>Assinaturas</h2></div>
+            <div class="stats-grid"><div class="stat-card"><div class="stat-icon" style="background: rgba(108, 92, 231, 0.15); color: #6C5CE7;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/></svg></div><div class="stat-info"><span class="stat-value">565</span><span class="stat-label">Assinaturas Ativas</span></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background: rgba(0, 229, 255, 0.15); color: #00E5FF;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="stat-info"><span class="stat-value">R$ 24.850</span><span class="stat-label">MRR</span></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background: rgba(0, 230, 118, 0.15); color: #00E676;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div><div class="stat-info"><span class="stat-value">R$ 298.200</span><span class="stat-label">ARR</span></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background: rgba(255, 82, 82, 0.15); color: #FF5252;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><div class="stat-info"><span class="stat-value">18</span><span class="stat-label">Cancelamentos (30d)</span></div></div></div>
+        </section>
+
+        <!-- Analytics Page -->
+        <section class="page" id="page-analytics">
+            <div class="page-header"><h2>Analytics</h2></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-info"><span class="stat-value">18.4%</span><span class="stat-label">Conversão FREE→PRO</span></div></div>
+                <div class="stat-card"><div class="stat-info"><span class="stat-value">92.1%</span><span class="stat-label">Retenção</span></div></div>
+                <div class="stat-card"><div class="stat-info"><span class="stat-value">R$ 186</span><span class="stat-label">LTV Médio</span></div></div>
+                <div class="stat-card"><div class="stat-info"><span class="stat-value">843</span><span class="stat-label">DAU</span></div></div>
+            </div>
+        </section>
+
+        <!-- Notifications Page -->
+        <section class="page" id="page-notifications">
+            <div class="page-header"><h2>Notificações Push</h2><button class="btn-primary" id="sendNotifBtn">🔔 Enviar Notificação</button></div>
+            <div class="card"><div class="card-header"><h3>Enviar notificação em massa</h3></div>
+            <form id="notifForm" class="form-grid"><div class="form-group"><label>Título</label><input type="text" placeholder="Título da notificação" id="notifTitle"></div><div class="form-group"><label>Mensagem</label><textarea placeholder="Corpo da notificação" id="notifBody" rows="3"></textarea></div><div class="form-group"><label>Público</label><select id="notifTarget"><option value="all">Todos os usuários</option><option value="free">Apenas FREE</option><option value="pro">Apenas PRO</option><option value="premium">Apenas PREMIUM</option></select></div><button type="submit" class="btn-primary">Enviar</button></form></div>
+        </section>
+
+        <!-- Coupons Page -->
+        <section class="page" id="page-coupons">
+            <div class="page-header"><h2>Cupons</h2><button class="btn-primary" id="createCouponBtn">➕ Criar Cupom</button></div>
+            <div class="card"><div class="card-header"><h3>Cupons ativos</h3></div>
+            <div class="table-container"><table><thead><tr><th>Código</th><th>Tipo</th><th>Valor</th><th>Usos</th><th>Expira</th><th>Status</th></tr></thead>
+            <tbody><tr><td><code>DRIVER50</code></td><td>Percentual</td><td>50%</td><td>23/100</td><td>31/05/2026</td><td><span class="status-dot active"></span>Ativo</td></tr>
+            <tr><td><code>BEMVINDO</code></td><td>Fixo</td><td>R$ 10,00</td><td>156/∞</td><td>-</td><td><span class="status-dot active"></span>Ativo</td></tr>
+            <tr><td><code>PROMO30</code></td><td>Percentual</td><td>30%</td><td>50/50</td><td>15/04/2026</td><td><span class="status-dot inactive"></span>Esgotado</td></tr></tbody></table></div></div>
+        </section>
+
+        <!-- Settings Page -->
+        <section class="page" id="page-settings">
+            <div class="page-header"><h2>Configurações</h2></div>
+            <div class="card"><div class="card-header"><h3>Configurações gerais</h3></div>
+            <form class="form-grid"><div class="form-group"><label>Nome do App</label><input type="text" value="Driver AI"></div><div class="form-group"><label>Email de suporte</label><input type="email" value="suporte@driverai.com"></div><div class="form-group"><label>Período trial (dias)</label><input type="number" value="7"></div><div class="form-group"><label>Máx análises FREE/dia</label><input type="number" value="20"></div><button type="submit" class="btn-primary">Salvar</button></form></div>
+        </section>
+    </main>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
