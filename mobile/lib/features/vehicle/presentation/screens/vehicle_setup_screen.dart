@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class VehicleSetupScreen extends StatefulWidget {
@@ -194,8 +195,8 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
   }
 
   String _calcCostPerKm() {
-    final c = double.tryParse(_consumptionCtrl.text) ?? 0;
-    final p = double.tryParse(_fuelPriceCtrl.text) ?? 0;
+    final c = double.tryParse(_consumptionCtrl.text.replaceAll(',', '.')) ?? 0;
+    final p = double.tryParse(_fuelPriceCtrl.text.replaceAll(',', '.')) ?? 0;
     return c > 0 ? (p / c).toStringAsFixed(2) : '0.00';
   }
 
@@ -216,7 +217,20 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
 
   void _handleSave() async {
     setState(() => _loading = true);
-    await Future.delayed(const Duration(seconds: 1));
+    
+    // Save to SharedPreferences so Kotlin service can read it
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('cost_per_km', _calcCostPerKm());
+      await prefs.setString('daily_goal', _dailyGoalCtrl.text.replaceAll(',', '.'));
+      await prefs.setString('weekly_goal', _weeklyGoalCtrl.text.replaceAll(',', '.'));
+      await prefs.setString('vehicle_type', _vehicleType);
+      await prefs.setString('user_name', 'Motorista Principal'); // Default for now
+    } catch (e) {
+      debugPrint('Error saving to SharedPreferences: $e');
+    }
+
+    await Future.delayed(const Duration(milliseconds: 500));
     if (mounted) { setState(() => _loading = false); context.go('/permissions-setup'); }
   }
 }

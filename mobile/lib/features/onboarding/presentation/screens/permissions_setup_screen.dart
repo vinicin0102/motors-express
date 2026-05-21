@@ -122,7 +122,32 @@ class _PermissionsSetupScreenState extends State<PermissionsSetupScreen> with Wi
 
               const SizedBox(height: 32),
 
-              // Info box
+              // Info box (Configuração Restrita)
+              if (!_accessibilityGranted) ...[
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.neonOrange.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.neonOrange.withOpacity(0.3)),
+                  ),
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    const Icon(Icons.warning_amber_rounded, color: AppColors.neonOrange, size: 24),
+                    const SizedBox(width: 12),
+                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      const Text('Acessibilidade Bloqueada?', style: TextStyle(color: AppColors.neonOrange, fontSize: 14, fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Se aparecer "Configuração Restrita", vá nas Configurações do Celular > Aplicativos > Driver AI > clique nos 3 pontinhos no canto superior direito > "Permitir configurações restritas".',
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 12, height: 1.4),
+                      ),
+                    ])),
+                  ]),
+                ).animate().fadeIn(delay: 500.ms),
+                const SizedBox(height: 16),
+              ],
+
+              // Info box (Privacidade)
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(

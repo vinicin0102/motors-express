@@ -136,14 +136,13 @@ class RideDetectorService : AccessibilityService() {
     }
 
     /**
-     * Analyzes ride and shows floating overlay
+     * Analyzes ride and shows floating overlay, and saves to history
      */
     private fun analyzeAndShowOverlay(rideData: RideData) {
-        // Get stored vehicle data (cost per km)
-        val prefs = getSharedPreferences("driver_ai_prefs", MODE_PRIVATE)
-        val costPerKm = prefs.getFloat("cost_per_km", 0.49f).toDouble()
-        val goalTarget = prefs.getFloat("daily_goal", 280f).toDouble()
-        val goalCurrent = prefs.getFloat("daily_current", 0f).toDouble()
+        // Read from FlutterSharedPreferences using the 'flutter.' prefix
+        val prefs = getSharedPreferences("FlutterSharedPreferences", MODE_PRIVATE)
+        val costPerKmString = prefs.getString("flutter.cost_per_km", "0.49") ?: "0.49"
+        val costPerKm = costPerKmString.toDoubleOrNull() ?: 0.49
 
         val valuePerKm = if (rideData.distance > 0) rideData.value / rideData.distance else 0.0
         val fuelCost = costPerKm * rideData.distance
@@ -168,6 +167,44 @@ class RideDetectorService : AccessibilityService() {
             distance = rideData.distance,
             platform = rideData.platform
         )
+
+        // Save to local history for Flutter to read
+        saveRideToHistory(prefs, rideData, estimatedProfit)
+    }
+
+    private fun saveRideToHistory(prefs: android.content.SharedPreferences, rideData: RideData, profit: Double) {
+        try {
+            val historyStr = prefs.getString("flutter.ride_history", "[]") ?: "[]"
+            val array = org.json.JSONArray(historyStr)
+            
+            val obj = org.json.JSONObject().apply {
+                put("id", java.util.UUID.randomUUID().toString())
+                put("value", rideData.value)
+                put("distance", rideData.distance)
+                put("duration", rideData.duration ?: 0)
+                put("platform", rideData.platform)
+                put("profit", profit)
+                put("timestamp", System.currentTimeMillis())
+            }
+            
+            array.put(obj)
+            
+            // Keep only the last 100 rides to avoid bloating
+            val newArray = if (array.length() > 100) {
+                val temp = org.json.JSONArray()
+                for (i in array.length() - 100 until array.length()) {
+                    temp.put(array.get(i))
+                }
+                temp
+            } else {
+                array
+            }
+
+            prefs.edit().putString("flutter.ride_history", newArray.toString()).apply()
+            Log.d(TAG, "Ride saved to history successfully")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error saving ride to history", e)
+        }
     }
 }
 

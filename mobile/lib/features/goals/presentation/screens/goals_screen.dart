@@ -1,24 +1,71 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/theme/app_theme.dart';
 
-class GoalsScreen extends StatelessWidget {
+class GoalsScreen extends StatefulWidget {
   const GoalsScreen({super.key});
 
   @override
+  State<GoalsScreen> createState() => _GoalsScreenState();
+}
+
+class _GoalsScreenState extends State<GoalsScreen> {
+  double _dailyGoal = 200.0;
+  double _weeklyGoal = 1000.0;
+  double _monthlyGoal = 4000.0;
+  
+  double _currentRevenue = 0.0;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGoals();
+  }
+
+  Future<void> _loadGoals() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      _dailyGoal = double.tryParse(prefs.getString('daily_goal') ?? '200') ?? 200.0;
+      _weeklyGoal = double.tryParse(prefs.getString('weekly_goal') ?? '1000') ?? 1000.0;
+      _monthlyGoal = double.tryParse(prefs.getString('monthly_goal') ?? '4000') ?? 4000.0;
+
+      final historyStr = prefs.getString('ride_history');
+      if (historyStr != null) {
+        final List<dynamic> jsonList = jsonDecode(historyStr);
+        for (var e in jsonList) {
+          final r = e as Map<String, dynamic>;
+          // For simplicity, we assume all history is "today" right now
+          _currentRevenue += (r['value'] as num).toDouble();
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading goals: $e');
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final remaining = _dailyGoal - _currentRevenue;
+    final remainingText = remaining > 0 ? 'Faltam R\$ ${remaining.toStringAsFixed(2)} para sua meta diária!' : 'Meta diária batida! Parabéns! 🎉';
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF0A0E21), Color(0xFF141729)])),
-        child: SafeArea(child: SingleChildScrollView(padding: const EdgeInsets.all(20), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: SafeArea(child: _loading ? const Center(child: CircularProgressIndicator()) : SingleChildScrollView(padding: const EdgeInsets.all(20), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('🎯 Metas', style: Theme.of(context).textTheme.displayMedium).animate().fadeIn(),
           const SizedBox(height: 8),
           Text('Acompanhe seu progresso', style: Theme.of(context).textTheme.bodyLarge).animate().fadeIn(delay: 100.ms),
           const SizedBox(height: 24),
 
-          _goalCard('Meta diária', 187.50, 280.00, AppColors.primary, '5 corridas boas restantes', 200),
-          _goalCard('Meta semanal', 842.30, 1400.00, AppColors.neonCyan, '≈ 3 dias de trabalho', 400),
-          _goalCard('Meta mensal', 3250.00, 5600.00, AppColors.neonGreen, 'Você está no caminho certo!', 600),
+          _goalCard('Meta diária', _currentRevenue, _dailyGoal, AppColors.primary, remaining > 0 ? 'Foco!' : 'Concluído!', 200),
+          _goalCard('Meta semanal', _currentRevenue, _weeklyGoal, AppColors.neonCyan, 'Progresso da semana', 400),
+          _goalCard('Meta mensal', _currentRevenue, _monthlyGoal, AppColors.neonGreen, 'Progresso do mês', 600),
 
           const SizedBox(height: 24),
 
@@ -34,31 +81,16 @@ class GoalsScreen extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('💪', style: TextStyle(fontSize: 32)),
               const SizedBox(height: 12),
-              const Text('Faltam R\$ 92,50 para sua meta!', style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w700)),
-              const SizedBox(height: 8),
-              const Text('Estimativa: 5 corridas boas restantes.', style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
+              Text(remainingText, style: const TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w700)),
               const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
-                child: const Text('Você consegue! 🚀', style: TextStyle(color: AppColors.neonCyan, fontWeight: FontWeight.w600)),
-              ),
+              if (remaining > 0)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
+                  child: const Text('Você consegue! 🚀', style: TextStyle(color: AppColors.neonCyan, fontWeight: FontWeight.w600)),
+                ),
             ]),
           ).animate().fadeIn(delay: 800.ms).scale(begin: const Offset(0.95, 0.95)),
-
-          const SizedBox(height: 24),
-
-          // Edit goals button
-          SizedBox(width: double.infinity, height: 56, child: OutlinedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.edit),
-            label: const Text('Editar metas'),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.primary,
-              side: const BorderSide(color: AppColors.primary),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            ),
-          )).animate().fadeIn(delay: 1000.ms),
 
           const SizedBox(height: 100),
         ]))),
@@ -67,7 +99,11 @@ class GoalsScreen extends StatelessWidget {
   }
 
   Widget _goalCard(String title, double current, double target, Color color, String estimate, int delay) {
-    final progress = current / target;
+    double progress = target > 0 ? current / target : 0;
+    if (progress > 1.0) progress = 1.0;
+    
+    final rem = target - current;
+    
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
@@ -89,7 +125,10 @@ class GoalsScreen extends StatelessWidget {
         const SizedBox(height: 12),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text('R\$ ${current.toStringAsFixed(2)} / R\$ ${target.toStringAsFixed(2)}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 13)),
-          Text('Faltam R\$ ${(target - current).toStringAsFixed(2)}', style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w600)),
+          if (rem > 0)
+            Text('Faltam R\$ ${rem.toStringAsFixed(2)}', style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w600))
+          else
+            Text('Atingida!', style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w600)),
         ]),
         const SizedBox(height: 6),
         Text(estimate, style: const TextStyle(color: AppColors.textTertiary, fontSize: 12)),

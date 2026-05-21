@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/theme/app_theme.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -13,6 +14,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver {
   bool _overlayActive = false;
   bool _accessibilityActive = false;
+  String _userName = 'Motorista';
+  String _userInitials = 'M';
 
   static const _channel = MethodChannel('com.driverai.app/permissions');
 
@@ -21,6 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _checkStatus();
+    _loadProfile();
   }
 
   @override
@@ -32,6 +36,23 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) _checkStatus();
+  }
+
+  Future<void> _loadProfile() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final name = prefs.getString('user_name');
+      if (name != null && name.isNotEmpty) {
+        if (mounted) {
+          setState(() {
+            _userName = name;
+            _userInitials = name.substring(0, 1).toUpperCase();
+          });
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading profile: $e');
+    }
   }
 
   Future<void> _checkStatus() async {
@@ -59,12 +80,12 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               Container(
                 width: 56, height: 56,
                 decoration: BoxDecoration(gradient: AppColors.primaryGradient, borderRadius: BorderRadius.circular(16)),
-                child: const Center(child: Text('M', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700))),
+                child: Center(child: Text(_userInitials, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700))),
               ),
               const SizedBox(width: 16),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const Text('Motorista', style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w700)),
-                const Text('motorista@email.com', style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
+                Text(_userName, style: const TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w700)),
+                const Text('motorista@email.com', style: const TextStyle(color: AppColors.textSecondary, fontSize: 14)),
               ])),
               const Icon(Icons.chevron_right, color: AppColors.textTertiary),
             ]),
@@ -141,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
           _item(Icons.help_outline, 'Ajuda', 1200),
           _item(Icons.privacy_tip_outlined, 'Política de privacidade', 1300),
           _item(Icons.description_outlined, 'Termos de uso', 1400),
-          _item(Icons.info_outline, 'Versão 1.1.0', 1500),
+          _item(Icons.info_outline, 'Versão 1.2.0', 1500),
 
           const SizedBox(height: 24),
           SizedBox(width: double.infinity, height: 52, child: OutlinedButton.icon(
