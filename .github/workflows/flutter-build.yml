@@ -73,5 +73,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG_NAME="v1.2.2"
+          TAG_NAME="v1.2.3"
           gh release create "$TAG_NAME" mobile/build/app/outputs/flutter-apk/app-release.apk --title "DriverAI $TAG_NAME" --notes "Auto-generated release" || echo "Release already exists, skipping."

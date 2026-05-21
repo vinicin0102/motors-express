@@ -179,6 +179,7 @@ class RideDetectorService : AccessibilityService() {
         overlayManager?.show(
             valuePerKm = valuePerKm,
             estimatedProfit = estimatedProfit,
+            fuelCost = fuelCost,
             compensa = compensa,
             rating = rating,
             rideValue = rideData.value,

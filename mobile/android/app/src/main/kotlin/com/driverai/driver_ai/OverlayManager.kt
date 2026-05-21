@@ -104,6 +104,7 @@ class OverlayManager(private val context: Context) {
     private fun createOverlayView(
         valuePerKm: Double,
         estimatedProfit: Double,
+        fuelCost: Double,
         compensa: Boolean,
         rating: String,
         rideValue: Double,
@@ -172,9 +173,18 @@ class OverlayManager(private val context: Context) {
         }
         container.addView(mainValue)
 
+        // Fuel line
+        val fuelText = TextView(context).apply {
+            text = "⛽ Gasto combustível: R\$ ${"%.2f".format(fuelCost)}"
+            setTextColor(Color.parseColor("#FFA000"))
+            textSize = 13f
+            setPadding(0, 0, 0, dpToPx(2))
+        }
+        container.addView(fuelText)
+
         // Profit line
         val profitText = TextView(context).apply {
-            text = "⛽ Lucro estimado: R\$ ${"%.2f".format(estimatedProfit)}"
+            text = "💵 Lucro estimado: R\$ ${"%.2f".format(estimatedProfit)}"
             setTextColor(if (estimatedProfit > 0) Color.parseColor("#00E676") else Color.parseColor("#FF5252"))
             textSize = 14f
             setPadding(0, 0, 0, dpToPx(8))
