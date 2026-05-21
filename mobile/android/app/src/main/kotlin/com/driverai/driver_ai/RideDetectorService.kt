@@ -56,6 +56,9 @@ class RideDetectorService : AccessibilityService() {
         overlayManager = OverlayManager(this)
     }
 
+    private var lastProcessedRide: RideData? = null
+    private var lastProcessedTime: Long = 0
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         event ?: return
         
@@ -69,6 +72,14 @@ class RideDetectorService : AccessibilityService() {
             val rideData = parseRideData(screenText, packageName)
             
             if (rideData != null) {
+                val currentTime = System.currentTimeMillis()
+                // Prevent duplicate processing of the same ride within 5 seconds
+                if (rideData == lastProcessedRide && currentTime - lastProcessedTime < 5000) {
+                    return
+                }
+                lastProcessedRide = rideData
+                lastProcessedTime = currentTime
+
                 Log.d(TAG, "Ride detected: $rideData")
                 analyzeAndShowOverlay(rideData)
             }
@@ -112,12 +123,16 @@ class RideDetectorService : AccessibilityService() {
      * Parses ride data from the extracted screen text
      */
     private fun parseRideData(text: String, packageName: String): RideData? {
-        val valueMatch = VALUE_PATTERN.find(text)
+        val valueMatches = VALUE_PATTERN.findAll(text)
         val distanceMatches = DISTANCE_PATTERN.findAll(text)
         
-        if (valueMatch == null) return null
+        // Take the max value to ignore hidden 'R$ 0,00' elements on the screen
+        val value = valueMatches.mapNotNull { it.groupValues[1].replace(",", ".").toDoubleOrNull() }
+                                .filter { it > 0.0 }
+                                .maxOrNull()
         
-        val value = valueMatch.groupValues[1].replace(",", ".").toDoubleOrNull() ?: return null
+        if (value == null) return null
+        
         val distance = distanceMatches.mapNotNull { it.groupValues[1].replace(",", ".").toDoubleOrNull() }.sum()
         
         val durationMatch = DURATION_PATTERN.find(text)

@@ -81,19 +81,22 @@ class OverlayManager(private val context: Context) {
 
     fun dismiss() {
         if (isShowing && overlayView != null) {
+            val viewToRemove = overlayView
+            overlayView = null
+            isShowing = false
+            
             try {
                 val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 200 }
-                overlayView?.startAnimation(fadeOut)
-                overlayView?.postDelayed({
+                viewToRemove?.startAnimation(fadeOut)
+                viewToRemove?.postDelayed({
                     try {
-                        windowManager?.removeView(overlayView)
+                        windowManager?.removeView(viewToRemove)
                     } catch (e: Exception) { }
-                    overlayView = null
-                    isShowing = false
                 }, 200)
             } catch (e: Exception) {
-                overlayView = null
-                isShowing = false
+                try {
+                    windowManager?.removeView(viewToRemove)
+                } catch (e2: Exception) {}
             }
         }
     }
