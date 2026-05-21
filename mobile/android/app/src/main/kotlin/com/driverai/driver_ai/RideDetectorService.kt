@@ -24,7 +24,9 @@ class RideDetectorService : AccessibilityService() {
         // Package names for ride-hailing apps
         private val MONITORED_PACKAGES = setOf(
             "com.ubercab.driver",           // Uber Driver
-            "com.ninety_nine.driver",       // 99 Driver
+            "com.taxis99",                  // 99 Driver (old)
+            "com.app99.driver",             // 99 Driver (alternative)
+            "com.didiglobal.driver",        // 99 Driver (new)
             "sinet.startup.inDriver"        // InDrive
         )
         
@@ -111,18 +113,19 @@ class RideDetectorService : AccessibilityService() {
      */
     private fun parseRideData(text: String, packageName: String): RideData? {
         val valueMatch = VALUE_PATTERN.find(text)
-        val distanceMatch = DISTANCE_PATTERN.find(text)
+        val distanceMatches = DISTANCE_PATTERN.findAll(text)
         
         if (valueMatch == null) return null
         
         val value = valueMatch.groupValues[1].replace(",", ".").toDoubleOrNull() ?: return null
-        val distance = distanceMatch?.groupValues?.get(1)?.replace(",", ".")?.toDoubleOrNull()
+        val distance = distanceMatches.mapNotNull { it.groupValues[1].replace(",", ".").toDoubleOrNull() }.sum()
+        
         val durationMatch = DURATION_PATTERN.find(text)
         val duration = durationMatch?.groupValues?.get(1)?.toIntOrNull()
         
         val platform = when (packageName) {
             "com.ubercab.driver" -> "Uber"
-            "com.ninety_nine.driver" -> "99"
+            "com.taxis99", "com.app99.driver", "com.didiglobal.driver" -> "99"
             "sinet.startup.inDriver" -> "InDrive"
             else -> "Unknown"
         }

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +23,7 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
   final _monthlyGoalCtrl = TextEditingController();
   String _fuelType = 'GASOLINE';
   String _vehicleType = 'CAR'; // CAR or MOTO
+  final Set<String> _selectedApps = {'UBER', '99'};
   bool _loading = false;
 
   final _fuels = [
@@ -30,6 +32,13 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
     {'value': 'CNG', 'label': 'GNV', 'icon': Icons.air},
     {'value': 'DIESEL', 'label': 'Diesel', 'icon': Icons.oil_barrel},
     {'value': 'ELECTRIC', 'label': 'Elétrico', 'icon': Icons.bolt},
+  ];
+
+  final _apps = [
+    {'value': 'UBER', 'label': 'Uber'},
+    {'value': '99', 'label': '99'},
+    {'value': 'INDRIVE', 'label': 'inDrive'},
+    {'value': 'IFOOD', 'label': 'iFood'},
   ];
 
   @override
@@ -68,6 +77,46 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
                 const SizedBox(width: 12),
                 Expanded(child: _vehicleTypeCard('MOTO', '🏍️', 'Moto', 300)),
               ]),
+              const SizedBox(height: 24),
+
+              // Work Apps
+              _sectionTitle('📱 Aplicativos que você usa', 350),
+              const SizedBox(height: 12),
+              Wrap(spacing: 12, runSpacing: 12, children: _apps.map((app) {
+                final selected = _selectedApps.contains(app['value']);
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (selected && _selectedApps.length > 1) {
+                        _selectedApps.remove(app['value']);
+                      } else {
+                        _selectedApps.add(app['value'] as String);
+                      }
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: 200.ms,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: selected ? AppColors.primary.withOpacity(0.2) : AppColors.bgCardLight,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: selected ? AppColors.primary : Colors.white.withOpacity(0.08)),
+                    ),
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(
+                        selected ? Icons.check_circle : Icons.radio_button_unchecked,
+                        color: selected ? AppColors.neonCyan : AppColors.textTertiary,
+                        size: 18
+                      ),
+                      const SizedBox(width: 8),
+                      Text(app['label'] as String, style: TextStyle(
+                        color: selected ? AppColors.textPrimary : AppColors.textSecondary,
+                        fontWeight: selected ? FontWeight.w700 : FontWeight.w500
+                      )),
+                    ]),
+                  ),
+                );
+              }).toList()).animate().fadeIn(delay: 350.ms),
               const SizedBox(height: 24),
 
               // Vehicle section
@@ -218,14 +267,14 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
   void _handleSave() async {
     setState(() => _loading = true);
     
-    // Save to SharedPreferences so Kotlin service can read it
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('cost_per_km', _calcCostPerKm());
       await prefs.setString('daily_goal', _dailyGoalCtrl.text.replaceAll(',', '.'));
       await prefs.setString('weekly_goal', _weeklyGoalCtrl.text.replaceAll(',', '.'));
       await prefs.setString('vehicle_type', _vehicleType);
-      await prefs.setString('user_name', 'Motorista Principal'); // Default for now
+      await prefs.setString('work_apps', jsonEncode(_selectedApps.toList()));
+      await prefs.setString('user_name', 'Motorista Parceiro');
     } catch (e) {
       debugPrint('Error saving to SharedPreferences: $e');
     }
@@ -234,3 +283,4 @@ class _VehicleSetupScreenState extends State<VehicleSetupScreen> {
     if (mounted) { setState(() => _loading = false); context.go('/permissions-setup'); }
   }
 }
+

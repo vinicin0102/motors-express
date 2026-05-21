@@ -83,9 +83,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                 child: Center(child: Text(_userInitials, style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700))),
               ),
               const SizedBox(width: 16),
-              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(_userName, style: const TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w700)),
-                const Text('motorista@email.com', style: const TextStyle(color: AppColors.textSecondary, fontSize: 14)),
+                const Text('Motorista Parceiro', style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
               ])),
               const Icon(Icons.chevron_right, color: AppColors.textTertiary),
             ]),
