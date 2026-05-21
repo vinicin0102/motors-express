@@ -1,0 +1,622 @@
+﻿2026-05-21T20:01:42.3513072Z Current runner version: '2.334.0'
+2026-05-21T20:01:42.3536741Z ##[group]Runner Image Provisioner
+2026-05-21T20:01:42.3537556Z Hosted Compute Agent
+2026-05-21T20:01:42.3538109Z Version: 20260213.493
+2026-05-21T20:01:42.3538737Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-21T20:01:42.3539491Z Build Date: 2026-02-13T00:28:41Z
+2026-05-21T20:01:42.3540142Z Worker ID: {ed7b88cd-8e18-4150-bc57-cb288c48da14}
+2026-05-21T20:01:42.3540822Z Azure Region: westus
+2026-05-21T20:01:42.3541382Z ##[endgroup]
+2026-05-21T20:01:42.3542763Z ##[group]Operating System
+2026-05-21T20:01:42.3543438Z Ubuntu
+2026-05-21T20:01:42.3543939Z 24.04.4
+2026-05-21T20:01:42.3544399Z LTS
+2026-05-21T20:01:42.3544805Z ##[endgroup]
+2026-05-21T20:01:42.3545707Z ##[group]Runner Image
+2026-05-21T20:01:42.3546258Z Image: ubuntu-24.04
+2026-05-21T20:01:42.3546733Z Version: 20260518.149.1
+2026-05-21T20:01:42.3547986Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260518.149/images/ubuntu/Ubuntu2404-Readme.md
+2026-05-21T20:01:42.3549467Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260518.149
+2026-05-21T20:01:42.3550346Z ##[endgroup]
+2026-05-21T20:01:42.3551395Z ##[group]GITHUB_TOKEN Permissions
+2026-05-21T20:01:42.3553234Z Contents: read
+2026-05-21T20:01:42.3553787Z Metadata: read
+2026-05-21T20:01:42.3554265Z Packages: read
+2026-05-21T20:01:42.3554848Z ##[endgroup]
+2026-05-21T20:01:42.3557126Z Secret source: Actions
+2026-05-21T20:01:42.3557868Z Prepare workflow directory
+2026-05-21T20:01:42.3880665Z Prepare all required actions
+2026-05-21T20:01:42.3917503Z Getting action download info
+2026-05-21T20:01:42.9673981Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-21T20:01:43.1329484Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-05-21T20:01:43.7267366Z Download action repository 'subosito/flutter-action@v2' (SHA:1a449444c387b1966244ae4d4f8c696479add0b2)
+2026-05-21T20:01:43.9734418Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-05-21T20:01:44.2288053Z Getting action download info
+2026-05-21T20:01:44.4284744Z Download action repository 'actions/cache@v5' (SHA:27d5ce7f107fe9357f9df03efb73ab90386fccae)
+2026-05-21T20:01:44.5999435Z Complete job name: Build APK
+2026-05-21T20:01:44.6859464Z ##[group]Run actions/checkout@v4
+2026-05-21T20:01:44.6860764Z with:
+2026-05-21T20:01:44.6861520Z   repository: vinicin0102/motors-express
+2026-05-21T20:01:44.6862791Z   token: ***
+2026-05-21T20:01:44.6863496Z   ssh-strict: true
+2026-05-21T20:01:44.6864224Z   ssh-user: git
+2026-05-21T20:01:44.6864964Z   persist-credentials: true
+2026-05-21T20:01:44.6866021Z   clean: true
+2026-05-21T20:01:44.6866773Z   sparse-checkout-cone-mode: true
+2026-05-21T20:01:44.6867757Z   fetch-depth: 1
+2026-05-21T20:01:44.6868488Z   fetch-tags: false
+2026-05-21T20:01:44.6869243Z   show-progress: true
+2026-05-21T20:01:44.6869996Z   lfs: false
+2026-05-21T20:01:44.6870702Z   submodules: false
+2026-05-21T20:01:44.6871460Z   set-safe-directory: true
+2026-05-21T20:01:44.6872701Z ##[endgroup]
+2026-05-21T20:01:44.8008641Z Syncing repository: vinicin0102/motors-express
+2026-05-21T20:01:44.8011402Z ##[group]Getting Git version info
+2026-05-21T20:01:44.8012854Z Working directory is '/home/runner/work/motors-express/motors-express'
+2026-05-21T20:01:44.8014724Z [command]/usr/bin/git version
+2026-05-21T20:01:44.8108493Z git version 2.54.0
+2026-05-21T20:01:44.8135141Z ##[endgroup]
+2026-05-21T20:01:44.8150590Z Temporarily overriding HOME='/home/runner/work/_temp/c0646648-843d-4484-bf10-7430b2efbbdf' before making global git config changes
+2026-05-21T20:01:44.8153110Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-21T20:01:44.8163116Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/motors-express/motors-express
+2026-05-21T20:01:44.8213696Z Deleting the contents of '/home/runner/work/motors-express/motors-express'
+2026-05-21T20:01:44.8217263Z ##[group]Initializing the repository
+2026-05-21T20:01:44.8221520Z [command]/usr/bin/git init /home/runner/work/motors-express/motors-express
+2026-05-21T20:01:44.8347087Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-21T20:01:44.8349002Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-21T20:01:44.8350810Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-21T20:01:44.8352208Z hint: call:
+2026-05-21T20:01:44.8353069Z hint:
+2026-05-21T20:01:44.8354577Z hint: 	git config --global init.defaultBranch <name>
+2026-05-21T20:01:44.8356791Z hint:
+2026-05-21T20:01:44.8358617Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-21T20:01:44.8361691Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-21T20:01:44.8364059Z hint:
+2026-05-21T20:01:44.8365550Z hint: 	git branch -m <name>
+2026-05-21T20:01:44.8367037Z hint:
+2026-05-21T20:01:44.8369084Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-21T20:01:44.8372491Z Initialized empty Git repository in /home/runner/work/motors-express/motors-express/.git/
+2026-05-21T20:01:44.8376846Z [command]/usr/bin/git remote add origin https://github.com/vinicin0102/motors-express
+2026-05-21T20:01:44.8413460Z ##[endgroup]
+2026-05-21T20:01:44.8416001Z ##[group]Disabling automatic garbage collection
+2026-05-21T20:01:44.8418128Z [command]/usr/bin/git config --local gc.auto 0
+2026-05-21T20:01:44.8446781Z ##[endgroup]
+2026-05-21T20:01:44.8448906Z ##[group]Setting up auth
+2026-05-21T20:01:44.8454094Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-21T20:01:44.8490541Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-21T20:01:44.8870281Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-21T20:01:44.8902036Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-21T20:01:44.9112763Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-21T20:01:44.9141173Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-21T20:01:44.9428217Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-21T20:01:44.9432220Z ##[endgroup]
+2026-05-21T20:01:44.9433414Z ##[group]Fetching the repository
+2026-05-21T20:01:44.9436096Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a47b3d37607b0da0d5195675c192883a87788805:refs/remotes/origin/main
+2026-05-21T20:02:01.5004070Z From https://github.com/vinicin0102/motors-express
+2026-05-21T20:02:01.5004716Z  * [new ref]         a47b3d37607b0da0d5195675c192883a87788805 -> origin/main
+2026-05-21T20:02:01.5044839Z ##[endgroup]
+2026-05-21T20:02:01.5045600Z ##[group]Determining the checkout info
+2026-05-21T20:02:01.5048191Z ##[endgroup]
+2026-05-21T20:02:01.5056744Z [command]/usr/bin/git sparse-checkout disable
+2026-05-21T20:02:01.5104450Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-21T20:02:01.5131966Z ##[group]Checking out the ref
+2026-05-21T20:02:01.5138231Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-05-21T20:02:02.3883120Z Switched to a new branch 'main'
+2026-05-21T20:02:02.3887645Z branch 'main' set up to track 'origin/main'.
+2026-05-21T20:02:02.3957980Z ##[endgroup]
+2026-05-21T20:02:02.4002306Z [command]/usr/bin/git log -1 --format=%H
+2026-05-21T20:02:02.4026835Z a47b3d37607b0da0d5195675c192883a87788805
+2026-05-21T20:02:02.4282768Z ##[group]Run actions/setup-java@v4
+2026-05-21T20:02:02.4283058Z with:
+2026-05-21T20:02:02.4283239Z   distribution: zulu
+2026-05-21T20:02:02.4283429Z   java-version: 17
+2026-05-21T20:02:02.4283616Z   java-package: jdk
+2026-05-21T20:02:02.4283803Z   check-latest: false
+2026-05-21T20:02:02.4283997Z   server-id: github
+2026-05-21T20:02:02.4284187Z   server-username: GITHUB_ACTOR
+2026-05-21T20:02:02.4284424Z   server-password: GITHUB_TOKEN
+2026-05-21T20:02:02.4284651Z   overwrite-settings: true
+2026-05-21T20:02:02.4284859Z   job-status: success
+2026-05-21T20:02:02.4285171Z   token: ***
+2026-05-21T20:02:02.4285667Z ##[endgroup]
+2026-05-21T20:02:02.6280678Z ##[group]Installed distributions
+2026-05-21T20:02:02.6305026Z Trying to resolve the latest version from remote
+2026-05-21T20:02:02.7049081Z Resolved latest version as 17.0.19+10
+2026-05-21T20:02:02.7049679Z Trying to download...
+2026-05-21T20:02:02.7050664Z Downloading Java 17.0.19+10 (Zulu) from https://cdn.azul.com/zulu/bin/zulu17.66.19-ca-crac-jdk17.0.19-linux_x64.tar.gz ...
+2026-05-21T20:02:06.1484899Z Extracting Java archive...
+2026-05-21T20:02:06.1589249Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/e60b317b-0de4-41b0-9dcd-412775672af0 -f /home/runner/work/_temp/0f7a3689-085f-4105-a4eb-21c464d21513
+2026-05-21T20:02:08.8907616Z Java 17.0.19+10 was downloaded
+2026-05-21T20:02:08.8908037Z Setting Java 17.0.19+10 as the default
+2026-05-21T20:02:08.8922700Z Creating toolchains.xml for JDK version 17 from zulu
+2026-05-21T20:02:08.9003414Z Writing to /home/runner/.m2/toolchains.xml
+2026-05-21T20:02:08.9003993Z 
+2026-05-21T20:02:08.9004480Z Java configuration:
+2026-05-21T20:02:08.9004850Z   Distribution: zulu
+2026-05-21T20:02:08.9005218Z   Version: 17.0.19+10
+2026-05-21T20:02:08.9005933Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9006354Z 
+2026-05-21T20:02:08.9007439Z ##[endgroup]
+2026-05-21T20:02:08.9026549Z Creating settings.xml with server-id: github
+2026-05-21T20:02:08.9028805Z Writing to /home/runner/.m2/settings.xml
+2026-05-21T20:02:08.9281638Z ##[group]Run subosito/flutter-action@v2
+2026-05-21T20:02:08.9281929Z with:
+2026-05-21T20:02:08.9282102Z   flutter-version: 3.19.0
+2026-05-21T20:02:08.9282310Z   channel: stable
+2026-05-21T20:02:08.9282485Z   architecture: X64
+2026-05-21T20:02:08.9282665Z   cache: false
+2026-05-21T20:02:08.9282841Z   pub-cache-path: default
+2026-05-21T20:02:08.9283044Z   dry-run: false
+2026-05-21T20:02:08.9283283Z   git-source: https://github.com/flutter/flutter.git
+2026-05-21T20:02:08.9283572Z env:
+2026-05-21T20:02:08.9283809Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9284197Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9284505Z ##[endgroup]
+2026-05-21T20:02:08.9380496Z ##[group]Run chmod +x "$GITHUB_ACTION_PATH/setup.sh"
+2026-05-21T20:02:08.9380887Z [36;1mchmod +x "$GITHUB_ACTION_PATH/setup.sh"[0m
+2026-05-21T20:02:08.9419003Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-21T20:02:08.9419395Z env:
+2026-05-21T20:02:08.9419637Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9420033Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9420336Z ##[endgroup]
+2026-05-21T20:02:08.9560606Z ##[group]Run $GITHUB_ACTION_PATH/setup.sh -p \
+2026-05-21T20:02:08.9560978Z [36;1m$GITHUB_ACTION_PATH/setup.sh -p \[0m
+2026-05-21T20:02:08.9561243Z [36;1m  -n '3.19.0' \[0m
+2026-05-21T20:02:08.9561437Z [36;1m  -f '' \[0m
+2026-05-21T20:02:08.9561617Z [36;1m  -a 'X64' \[0m
+2026-05-21T20:02:08.9561793Z [36;1m  -k '' \[0m
+2026-05-21T20:02:08.9561964Z [36;1m  -c '' \[0m
+2026-05-21T20:02:08.9562128Z [36;1m  -l '' \[0m
+2026-05-21T20:02:08.9562300Z [36;1m  -d 'default' \[0m
+2026-05-21T20:02:08.9562583Z [36;1m  -g 'https://github.com/flutter/flutter.git' \[0m
+2026-05-21T20:02:08.9562874Z [36;1m  stable[0m
+2026-05-21T20:02:08.9594499Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-21T20:02:08.9594985Z env:
+2026-05-21T20:02:08.9595455Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9595876Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:08.9596188Z ##[endgroup]
+2026-05-21T20:02:09.2513006Z ##[group]Run $GITHUB_ACTION_PATH/setup.sh \
+2026-05-21T20:02:09.2513325Z [36;1m$GITHUB_ACTION_PATH/setup.sh \[0m
+2026-05-21T20:02:09.2513585Z [36;1m  -n '3.19.0' \[0m
+2026-05-21T20:02:09.2513793Z [36;1m  -a 'x64' \[0m
+2026-05-21T20:02:09.2514086Z [36;1m  -c '/opt/hostedtoolcache/flutter/stable-3.19.0-x64' \[0m
+2026-05-21T20:02:09.2514419Z [36;1m  -d '/home/runner/.pub-cache' \[0m
+2026-05-21T20:02:09.2514669Z [36;1m  stable[0m
+2026-05-21T20:02:09.2546720Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-05-21T20:02:09.2547029Z env:
+2026-05-21T20:02:09.2547268Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:09.2547659Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:09.2547995Z ##[endgroup]
+2026-05-21T20:02:09.4473209Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-05-21T20:02:09.4473949Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-05-21T20:02:09.4474365Z 
+2026-05-21T20:02:10.3219774Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-05-21T20:02:11.3203603Z   6  632M    6 39.0M    0     0  44.6M      0  0:00:14 --:--:--  0:00:14 44.6M
+2026-05-21T20:02:12.3204029Z  16  632M   16  104M    0     0  55.7M      0  0:00:11  0:00:01  0:00:10 55.7M
+2026-05-21T20:02:13.3215550Z  25  632M   25  158M    0     0  55.2M      0  0:00:11  0:00:02  0:00:09 55.2M
+2026-05-21T20:02:14.3199908Z  34  632M   34  216M    0     0  55.8M      0  0:00:11  0:00:03  0:00:08 55.8M
+2026-05-21T20:02:15.3199901Z  44  632M   44  282M    0     0  58.0M      0  0:00:10  0:00:04  0:00:06 58.0M
+2026-05-21T20:02:16.3201788Z  51  632M   51  327M    0     0  55.8M      0  0:00:11  0:00:05  0:00:06 57.7M
+2026-05-21T20:02:17.3211495Z  61  632M   61  387M    0     0  56.4M      0  0:00:11  0:00:06  0:00:05 56.6M
+2026-05-21T20:02:18.3211273Z  71  632M   71  452M    0     0  57.4M      0  0:00:11  0:00:07  0:00:04 58.6M
+2026-05-21T20:02:19.3201759Z  81  632M   81  513M    0     0  57.8M      0  0:00:10  0:00:08  0:00:02 59.4M
+2026-05-21T20:02:20.0924189Z  91  632M   91  580M    0     0  58.8M      0  0:00:10  0:00:09  0:00:01 59.6M
+2026-05-21T20:02:20.0924815Z 100  632M  100  632M    0     0  59.4M      0  0:00:10  0:00:10 --:--:-- 63.8M
+2026-05-21T20:02:47.5048598Z ##[group]Run # Backup our custom Kotlin files before flutter create
+2026-05-21T20:02:47.5049078Z [36;1m# Backup our custom Kotlin files before flutter create[0m
+2026-05-21T20:02:47.5049566Z [36;1mcp -r android/app/src/main/kotlin/com/driverai/driver_ai /tmp/custom_kotlin_backup[0m
+2026-05-21T20:02:47.5049973Z [36;1m[0m
+2026-05-21T20:02:47.5050313Z [36;1mflutter create --platforms=android --org com.driverai --project-name driver_ai .[0m
+2026-05-21T20:02:47.5050767Z [36;1mmkdir -p android/app/src/main/res/xml[0m
+2026-05-21T20:02:47.5051198Z [36;1mcp custom_manifest/AndroidManifest.xml android/app/src/main/AndroidManifest.xml[0m
+2026-05-21T20:02:47.5051878Z [36;1mcp custom_manifest/accessibility_service_config.xml android/app/src/main/res/xml/accessibility_service_config.xml[0m
+2026-05-21T20:02:47.5052374Z [36;1m[0m
+2026-05-21T20:02:47.5052707Z [36;1m# Restore our custom Kotlin files (overwriting any default generated by flutter create)[0m
+2026-05-21T20:02:47.5053306Z [36;1mcp -r /tmp/custom_kotlin_backup/* android/app/src/main/kotlin/com/driverai/driver_ai/[0m
+2026-05-21T20:02:47.5087715Z shell: /usr/bin/bash -e {0}
+2026-05-21T20:02:47.5087942Z env:
+2026-05-21T20:02:47.5088186Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:47.5088595Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:02:47.5089006Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.19.0-x64/flutter
+2026-05-21T20:02:47.5089530Z   PUB_CACHE: /home/runner/.pub-cache
+2026-05-21T20:02:47.5089762Z ##[endgroup]
+2026-05-21T20:02:47.6823590Z 
+2026-05-21T20:02:47.6837713Z   ╔════════════════════════════════════════════════════════════════════════════╗
+2026-05-21T20:02:47.6838748Z   ║                 Welcome to Flutter! - https://flutter.dev                  ║
+2026-05-21T20:02:47.6839659Z   ║                                                                            ║
+2026-05-21T20:02:47.6840593Z   ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+2026-05-21T20:02:47.6841643Z   ║ statistics and basic crash reports. This data is used to help improve      ║
+2026-05-21T20:02:47.6842653Z   ║ Flutter tools over time.                                                   ║
+2026-05-21T20:02:47.6843499Z   ║                                                                            ║
+2026-05-21T20:02:47.6844367Z   ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+2026-05-21T20:02:47.6845679Z   ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+2026-05-21T20:02:47.6846653Z   ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+2026-05-21T20:02:47.6847569Z   ║ event will be sent, and then no further information will be sent by the    ║
+2026-05-21T20:02:47.6848407Z   ║ Flutter tool.                                                              ║
+2026-05-21T20:02:47.6849092Z   ║                                                                            ║
+2026-05-21T20:02:47.6849870Z   ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+2026-05-21T20:02:47.6850792Z   ║ The Google Privacy Policy describes how data is handled in this service.   ║
+2026-05-21T20:02:47.6851593Z   ║                                                                            ║
+2026-05-21T20:02:47.6852396Z   ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+2026-05-21T20:02:47.6853220Z   ║ crash reports to Google.                                                   ║
+2026-05-21T20:02:47.6853667Z   ║                                                                            ║
+2026-05-21T20:02:47.6854117Z   ║ Read about data we send with crash reports:                                ║
+2026-05-21T20:02:47.6854670Z   ║ https://flutter.dev/docs/reference/crash-reporting                         ║
+2026-05-21T20:02:47.6855194Z   ║                                                                            ║
+2026-05-21T20:02:47.6856262Z   ║ See Google's privacy policy:                                               ║
+2026-05-21T20:02:47.6856798Z   ║ https://policies.google.com/privacy                                        ║
+2026-05-21T20:02:47.6857227Z   ║                                                                            ║
+2026-05-21T20:02:47.6857693Z   ║ To disable animations in this tool, use                                    ║
+2026-05-21T20:02:47.6858202Z   ║ 'flutter config --no-cli-animations'.                                      ║
+2026-05-21T20:02:47.6858694Z   ╚════════════════════════════════════════════════════════════════════════════╝
+2026-05-21T20:02:47.6858921Z 
+2026-05-21T20:02:53.0864480Z Recreating project ....
+2026-05-21T20:02:53.1376791Z   README.md (created)
+2026-05-21T20:02:53.1472785Z   test/widget_test.dart (created)
+2026-05-21T20:02:53.1487338Z   analysis_options.yaml (created)
+2026-05-21T20:02:53.1508638Z   driver_ai.iml (created)
+2026-05-21T20:02:53.1516970Z   .gitignore (created)
+2026-05-21T20:02:53.1523240Z   .idea/modules.xml (created)
+2026-05-21T20:02:53.1529852Z   .idea/libraries/Dart_SDK.xml (created)
+2026-05-21T20:02:53.1538993Z   .idea/libraries/KotlinJavaRuntime.xml (created)
+2026-05-21T20:02:53.1544551Z   .idea/workspace.xml (created)
+2026-05-21T20:02:53.1554741Z   .idea/runConfigurations/main_dart.xml (created)
+2026-05-21T20:02:53.1562960Z   android/build.gradle (created)
+2026-05-21T20:02:53.1572295Z   android/app/build.gradle (created)
+2026-05-21T20:02:53.1582597Z   android/driver_ai_android.iml (created)
+2026-05-21T20:02:53.1592455Z   android/.gitignore (created)
+2026-05-21T20:02:53.1604244Z   android/settings.gradle (created)
+2026-05-21T20:02:53.1611063Z   android/gradle.properties (created)
+2026-05-21T20:02:53.1615861Z   android/app/src/main/AndroidManifest.xml (created)
+2026-05-21T20:02:53.1624503Z   android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png (created)
+2026-05-21T20:02:53.1630171Z   android/app/src/main/res/mipmap-hdpi/ic_launcher.png (created)
+2026-05-21T20:02:53.1635426Z   android/app/src/main/res/values-night/styles.xml (created)
+2026-05-21T20:02:53.1640324Z   android/app/src/main/res/drawable/launch_background.xml (created)
+2026-05-21T20:02:53.1644823Z   android/app/src/main/res/values/styles.xml (created)
+2026-05-21T20:02:53.1649127Z   android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png (created)
+2026-05-21T20:02:53.1653858Z   android/app/src/main/res/mipmap-xhdpi/ic_launcher.png (created)
+2026-05-21T20:02:53.1659295Z   android/app/src/main/res/mipmap-mdpi/ic_launcher.png (created)
+2026-05-21T20:02:53.1663750Z   android/app/src/main/res/drawable-v21/launch_background.xml (created)
+2026-05-21T20:02:53.1668495Z   android/app/src/debug/AndroidManifest.xml (created)
+2026-05-21T20:02:53.1673591Z   android/app/src/profile/AndroidManifest.xml (created)
+2026-05-21T20:02:53.1678754Z   android/gradle/wrapper/gradle-wrapper.properties (created)
+2026-05-21T20:02:53.3366129Z Resolving dependencies...
+2026-05-21T20:03:02.6027149Z Got dependencies.
+2026-05-21T20:03:03.0794562Z Wrote 32 files.
+2026-05-21T20:03:03.0794855Z 
+2026-05-21T20:03:03.0794971Z All done!
+2026-05-21T20:03:03.0806491Z You can find general documentation for Flutter at: https://docs.flutter.dev/
+2026-05-21T20:03:03.0807795Z Detailed API documentation is available at: https://api.flutter.dev/
+2026-05-21T20:03:03.0808779Z If you prefer video documentation, consider: https://www.youtube.com/c/flutterdev
+2026-05-21T20:03:03.0809360Z 
+2026-05-21T20:03:03.0809578Z In order to run your application, type:
+2026-05-21T20:03:03.0809966Z 
+2026-05-21T20:03:03.0810086Z   $ cd .
+2026-05-21T20:03:03.0810370Z   $ flutter run
+2026-05-21T20:03:03.0810562Z 
+2026-05-21T20:03:03.0810756Z Your application code is in ./lib/main.dart.
+2026-05-21T20:03:03.0811100Z 
+2026-05-21T20:03:03.1414307Z ##[group]Run sed -i 's/minSdkVersion .*/minSdkVersion 23/' android/app/build.gradle
+2026-05-21T20:03:03.1414898Z [36;1msed -i 's/minSdkVersion .*/minSdkVersion 23/' android/app/build.gradle[0m
+2026-05-21T20:03:03.1415886Z [36;1msed -i 's/compileSdkVersion .*/compileSdkVersion 34/' android/app/build.gradle[0m
+2026-05-21T20:03:03.1416422Z [36;1msed -i 's/targetSdkVersion .*/targetSdkVersion 34/' android/app/build.gradle[0m
+2026-05-21T20:03:03.1416882Z [36;1msed -i "s/minSdk = .*/minSdk = 23/" android/app/build.gradle[0m
+2026-05-21T20:03:03.1417292Z [36;1msed -i "s/compileSdk = .*/compileSdk = 34/" android/app/build.gradle[0m
+2026-05-21T20:03:03.1417730Z [36;1msed -i "s/targetSdk = .*/targetSdk = 34/" android/app/build.gradle[0m
+2026-05-21T20:03:03.1418123Z [36;1mecho "--- build.gradle after patch ---"[0m
+2026-05-21T20:03:03.1418404Z [36;1mcat android/app/build.gradle[0m
+2026-05-21T20:03:03.1451394Z shell: /usr/bin/bash -e {0}
+2026-05-21T20:03:03.1451621Z env:
+2026-05-21T20:03:03.1451898Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:03:03.1452292Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:03:03.1452701Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.19.0-x64/flutter
+2026-05-21T20:03:03.1453047Z   PUB_CACHE: /home/runner/.pub-cache
+2026-05-21T20:03:03.1453271Z ##[endgroup]
+2026-05-21T20:03:03.1587062Z --- build.gradle after patch ---
+2026-05-21T20:03:03.1595754Z plugins {
+2026-05-21T20:03:03.1596437Z     id "com.android.application"
+2026-05-21T20:03:03.1596845Z     id "kotlin-android"
+2026-05-21T20:03:03.1597232Z     id "dev.flutter.flutter-gradle-plugin"
+2026-05-21T20:03:03.1597617Z }
+2026-05-21T20:03:03.1597908Z 
+2026-05-21T20:03:03.1598010Z def localProperties = new Properties()
+2026-05-21T20:03:03.1598364Z def localPropertiesFile = rootProject.file('local.properties')
+2026-05-21T20:03:03.1599144Z if (localPropertiesFile.exists()) {
+2026-05-21T20:03:03.1599712Z     localPropertiesFile.withReader('UTF-8') { reader ->
+2026-05-21T20:03:03.1600218Z         localProperties.load(reader)
+2026-05-21T20:03:03.1600502Z     }
+2026-05-21T20:03:03.1600644Z }
+2026-05-21T20:03:03.1600730Z 
+2026-05-21T20:03:03.1600935Z def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+2026-05-21T20:03:03.1601318Z if (flutterVersionCode == null) {
+2026-05-21T20:03:03.1601553Z     flutterVersionCode = '1'
+2026-05-21T20:03:03.1601752Z }
+2026-05-21T20:03:03.1601830Z 
+2026-05-21T20:03:03.1602028Z def flutterVersionName = localProperties.getProperty('flutter.versionName')
+2026-05-21T20:03:03.1602396Z if (flutterVersionName == null) {
+2026-05-21T20:03:03.1602619Z     flutterVersionName = '1.0'
+2026-05-21T20:03:03.1602828Z }
+2026-05-21T20:03:03.1602906Z 
+2026-05-21T20:03:03.1602969Z android {
+2026-05-21T20:03:03.1603148Z     namespace "com.driverai.driver_ai"
+2026-05-21T20:03:03.1603404Z     compileSdk flutter.compileSdkVersion
+2026-05-21T20:03:03.1603653Z     ndkVersion flutter.ndkVersion
+2026-05-21T20:03:03.1603804Z 
+2026-05-21T20:03:03.1603884Z     compileOptions {
+2026-05-21T20:03:03.1604109Z         sourceCompatibility JavaVersion.VERSION_1_8
+2026-05-21T20:03:03.1604416Z         targetCompatibility JavaVersion.VERSION_1_8
+2026-05-21T20:03:03.1604660Z     }
+2026-05-21T20:03:03.1604750Z 
+2026-05-21T20:03:03.1604818Z     kotlinOptions {
+2026-05-21T20:03:03.1604994Z         jvmTarget = '1.8'
+2026-05-21T20:03:03.1605178Z     }
+2026-05-21T20:03:03.1605516Z 
+2026-05-21T20:03:03.1605734Z     sourceSets {
+2026-05-21T20:03:03.1623713Z         main.java.srcDirs += 'src/main/kotlin'
+2026-05-21T20:03:03.1624034Z     }
+2026-05-21T20:03:03.1624131Z 
+2026-05-21T20:03:03.1624204Z     defaultConfig {
+2026-05-21T20:03:03.1624710Z         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+2026-05-21T20:03:03.1625531Z         applicationId "com.driverai.driver_ai"
+2026-05-21T20:03:03.1626135Z         // You can update the following values to match your application needs.
+2026-05-21T20:03:03.1626773Z         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+2026-05-21T20:03:03.1627360Z         minSdkVersion 23
+2026-05-21T20:03:03.1627590Z         targetSdkVersion 34
+2026-05-21T20:03:03.1627878Z         versionCode flutterVersionCode.toInteger()
+2026-05-21T20:03:03.1628160Z         versionName flutterVersionName
+2026-05-21T20:03:03.1628386Z     }
+2026-05-21T20:03:03.1628472Z 
+2026-05-21T20:03:03.1628542Z     buildTypes {
+2026-05-21T20:03:03.1628718Z         release {
+2026-05-21T20:03:03.1628955Z             // TODO: Add your own signing config for the release build.
+2026-05-21T20:03:03.1629370Z             // Signing with the debug keys for now, so `flutter run --release` works.
+2026-05-21T20:03:03.1629749Z             signingConfig signingConfigs.debug
+2026-05-21T20:03:03.1629982Z         }
+2026-05-21T20:03:03.1630130Z     }
+2026-05-21T20:03:03.1630267Z }
+2026-05-21T20:03:03.1630349Z 
+2026-05-21T20:03:03.1630426Z flutter {
+2026-05-21T20:03:03.1630572Z     source '../..'
+2026-05-21T20:03:03.1630751Z }
+2026-05-21T20:03:03.1630831Z 
+2026-05-21T20:03:03.1630899Z dependencies {}
+2026-05-21T20:03:03.1655803Z ##[group]Run flutter pub get
+2026-05-21T20:03:03.1656100Z [36;1mflutter pub get[0m
+2026-05-21T20:03:03.1686661Z shell: /usr/bin/bash -e {0}
+2026-05-21T20:03:03.1686885Z env:
+2026-05-21T20:03:03.1687125Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:03:03.1687516Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:03:03.1687919Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.19.0-x64/flutter
+2026-05-21T20:03:03.1688282Z   PUB_CACHE: /home/runner/.pub-cache
+2026-05-21T20:03:03.1688656Z ##[endgroup]
+2026-05-21T20:03:03.5036371Z Resolving dependencies...
+2026-05-21T20:03:04.1959677Z   _fe_analyzer_shared 67.0.0 (100.0.0 available)
+2026-05-21T20:03:04.1960268Z   _flutterfire_internals 1.3.25 (1.3.71 available)
+2026-05-21T20:03:04.1960743Z   analyzer 6.4.1 (13.0.0 available)
+2026-05-21T20:03:04.1961147Z   analyzer_plugin 0.11.3 (0.14.9 available)
+2026-05-21T20:03:04.1961593Z   archive 3.6.1 (4.0.9 available)
+2026-05-21T20:03:04.1962039Z   async 2.11.0 (2.13.1 available)
+2026-05-21T20:03:04.1962435Z   boolean_selector 2.1.1 (2.1.2 available)
+2026-05-21T20:03:04.1962856Z   build 2.4.1 (4.0.6 available)
+2026-05-21T20:03:04.1963229Z   build_config 1.1.1 (1.3.0 available)
+2026-05-21T20:03:04.1963640Z   build_daemon 4.0.1 (4.1.1 available)
+2026-05-21T20:03:04.1964065Z   build_resolvers 2.4.2 (3.0.4 available)
+2026-05-21T20:03:04.1964488Z   build_runner 2.4.9 (2.15.0 available)
+2026-05-21T20:03:04.1964916Z   build_runner_core 7.3.0 (9.3.2 available)
+2026-05-21T20:03:04.1965598Z   cached_network_image 3.4.0 (3.4.1 available)
+2026-05-21T20:03:04.1966183Z   cached_network_image_platform_interface 4.1.0 (4.1.1 available)
+2026-05-21T20:03:04.1966785Z   cached_network_image_web 1.3.0 (1.3.1 available)
+2026-05-21T20:03:04.1967257Z   characters 1.3.0 (1.4.1 available)
+2026-05-21T20:03:04.1967656Z   checked_yaml 2.0.3 (2.0.4 available)
+2026-05-21T20:03:04.1968052Z   clock 1.1.1 (1.1.2 available)
+2026-05-21T20:03:04.1968438Z   code_builder 4.10.0 (4.11.1 available)
+2026-05-21T20:03:04.1968840Z   collection 1.18.0 (1.19.1 available)
+2026-05-21T20:03:04.1969235Z   convert 3.1.1 (3.1.2 available)
+2026-05-21T20:03:04.1969604Z   crypto 3.0.3 (3.0.7 available)
+2026-05-21T20:03:04.1969990Z   cupertino_icons 1.0.8 (1.0.9 available)
+2026-05-21T20:03:04.1970420Z   custom_lint_core 0.6.3 (0.8.2 available)
+2026-05-21T20:03:04.1970848Z   dart_style 2.3.6 (3.1.9 available)
+2026-05-21T20:03:04.1971244Z   dio_web_adapter 1.1.1 (2.1.2 available)
+2026-05-21T20:03:04.1971658Z   fake_async 1.3.1 (1.3.3 available)
+2026-05-21T20:03:04.1972055Z   ffi 2.1.3 (2.2.0 available)
+2026-05-21T20:03:04.1972419Z   firebase_auth 4.17.8 (6.5.1 available)
+2026-05-21T20:03:04.1972936Z   firebase_auth_platform_interface 7.1.8 (9.0.1 available)
+2026-05-21T20:03:04.1973439Z   firebase_auth_web 5.9.8 (6.2.1 available)
+2026-05-21T20:03:04.1973865Z   firebase_core 2.27.0 (4.9.0 available)
+2026-05-21T20:03:04.1974341Z   firebase_core_platform_interface 5.4.2 (7.0.1 available)
+2026-05-21T20:03:04.1974880Z   firebase_core_web 2.11.5 (3.7.0 available)
+2026-05-21T20:03:04.1975575Z   firebase_messaging 14.7.19 (16.2.2 available)
+2026-05-21T20:03:04.1976155Z   firebase_messaging_platform_interface 4.5.27 (4.7.11 available)
+2026-05-21T20:03:04.1976761Z   firebase_messaging_web 3.6.8 (4.1.7 available)
+2026-05-21T20:03:04.1977238Z   fl_chart 0.66.2 (1.2.0 available)
+2026-05-21T20:03:04.1977663Z   flutter_cache_manager 3.4.0 (3.4.1 available)
+2026-05-21T20:03:04.1978105Z   flutter_lints 3.0.2 (6.0.0 available)
+2026-05-21T20:03:04.1978514Z   flutter_riverpod 2.6.1 (3.3.1 available)
+2026-05-21T20:03:04.1978981Z   flutter_secure_storage 9.2.4 (10.2.0 available)
+2026-05-21T20:03:04.1979486Z   flutter_secure_storage_linux 1.2.3 (3.0.0 available)
+2026-05-21T20:03:04.1980008Z   flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+2026-05-21T20:03:04.1980601Z   flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
+2026-05-21T20:03:04.1981618Z   flutter_secure_storage_web 1.2.1 (2.1.1 available)
+2026-05-21T20:03:04.1982177Z   flutter_secure_storage_windows 3.1.2 (4.2.1 available)
+2026-05-21T20:03:04.1982667Z   flutter_svg 2.0.10+1 (2.3.0 available)
+2026-05-21T20:03:04.1983096Z   freezed_annotation 2.4.4 (3.1.0 available)
+2026-05-21T20:03:04.1983520Z   go_router 13.2.5 (17.2.3 available)
+2026-05-21T20:03:04.1983918Z   google_fonts 6.2.0 (8.1.0 available)
+2026-05-21T20:03:04.1984344Z   google_mlkit_commons 0.6.1 (0.11.1 available)
+2026-05-21T20:03:04.1984861Z   google_mlkit_text_recognition 0.11.0 (0.15.1 available)
+2026-05-21T20:03:04.1985773Z   graphs 2.3.1 (2.3.2 available)
+2026-05-21T20:03:04.1986192Z   http 1.2.0 (1.6.0 available)
+2026-05-21T20:03:04.1986559Z   http_parser 4.0.2 (4.1.2 available)
+2026-05-21T20:03:04.1986988Z   in_app_purchase 3.2.0 (3.2.3 available)
+2026-05-21T20:03:04.1987453Z   in_app_purchase_android 0.3.6 (0.4.0+11 available)
+2026-05-21T20:03:04.1987959Z   in_app_purchase_storekit 0.3.20+2 (0.4.9 available)
+2026-05-21T20:03:04.1988413Z   intl 0.19.0 (0.20.2 available)
+2026-05-21T20:03:04.1988776Z   io 1.0.4 (1.0.5 available)
+2026-05-21T20:03:04.1989115Z   js 0.6.7 (0.7.2 available)
+2026-05-21T20:03:04.1989473Z   json_annotation 4.9.0 (4.12.0 available)
+2026-05-21T20:03:04.1989897Z   leak_tracker 10.0.0 (11.0.2 available)
+2026-05-21T20:03:04.1990377Z   leak_tracker_flutter_testing 2.0.1 (3.0.10 available)
+2026-05-21T20:03:04.1990876Z   leak_tracker_testing 2.0.1 (3.0.2 available)
+2026-05-21T20:03:04.1991307Z   lints 3.0.0 (6.1.0 available)
+2026-05-21T20:03:04.1991677Z   logging 1.2.0 (1.3.0 available)
+2026-05-21T20:03:04.1992057Z   lottie 3.1.3 (3.3.3 available)
+2026-05-21T20:03:04.1992336Z   matcher 0.12.16+1 (0.12.20 available)
+2026-05-21T20:03:04.1992602Z   material_color_utilities 0.8.0 (0.13.0 available)
+2026-05-21T20:03:04.1992888Z   meta 1.11.0 (1.18.2 available)
+2026-05-21T20:03:04.1993101Z   mime 1.0.6 (2.0.0 available)
+2026-05-21T20:03:04.1993311Z   package_config 2.1.0 (2.2.0 available)
+2026-05-21T20:03:04.1993567Z   package_info_plus 5.0.1 (10.1.0 available)
+2026-05-21T20:03:04.1993884Z   package_info_plus_platform_interface 2.0.1 (4.1.0 available)
+2026-05-21T20:03:04.1994184Z   path 1.9.0 (1.9.1 available)
+2026-05-21T20:03:04.1994402Z   path_provider 2.1.4 (2.1.5 available)
+2026-05-21T20:03:04.1994663Z   path_provider_android 2.2.4 (2.3.1 available)
+2026-05-21T20:03:04.1994946Z   path_provider_foundation 2.4.1 (2.6.0 available)
+2026-05-21T20:03:04.1995445Z   permission_handler 11.3.1 (12.0.1 available)
+2026-05-21T20:03:04.1995796Z   permission_handler_android 12.0.13 (13.0.1 available)
+2026-05-21T20:03:04.1996120Z   permission_handler_html 0.1.1 (0.1.3+5 available)
+2026-05-21T20:03:04.1996462Z   permission_handler_platform_interface 4.2.3 (4.3.0 available)
+2026-05-21T20:03:04.1996777Z   petitparser 6.0.2 (7.0.2 available)
+2026-05-21T20:03:04.1997012Z   pool 1.5.1 (1.5.2 available)
+2026-05-21T20:03:04.1997221Z   pub_semver 2.1.4 (2.2.0 available)
+2026-05-21T20:03:04.1997450Z   pubspec_parse 1.4.0 (1.5.0 available)
+2026-05-21T20:03:04.1997688Z   retrofit 4.5.0 (4.9.2 available)
+2026-05-21T20:03:04.1997902Z   riverpod 2.6.1 (3.2.1 available)
+2026-05-21T20:03:04.1998153Z   riverpod_analyzer_utils 0.5.1 (0.5.10 available)
+2026-05-21T20:03:04.1998432Z   riverpod_annotation 2.6.1 (4.0.2 available)
+2026-05-21T20:03:04.1998689Z   riverpod_generator 2.4.0 (4.0.3 available)
+2026-05-21T20:03:04.1998933Z   shared_preferences 2.2.3 (2.5.5 available)
+2026-05-21T20:03:04.1999219Z   shared_preferences_android 2.2.2 (2.4.23 available)
+2026-05-21T20:03:04.1999522Z   shared_preferences_foundation 2.5.3 (2.5.6 available)
+2026-05-21T20:03:04.1999866Z   shared_preferences_platform_interface 2.4.1 (2.4.2 available)
+2026-05-21T20:03:04.2000191Z   shared_preferences_web 2.2.2 (2.4.3 available)
+2026-05-21T20:03:04.2000439Z   shelf 1.4.1 (1.4.2 available)
+2026-05-21T20:03:04.2000657Z   shelf_web_socket 1.0.4 (3.0.0 available)
+2026-05-21T20:03:04.2000901Z   source_gen 1.5.0 (4.2.3 available)
+2026-05-21T20:03:04.2001132Z   source_span 1.10.0 (1.10.2 available)
+2026-05-21T20:03:04.2001540Z   sqflite 2.3.3+1 (2.4.2+1 available)
+2026-05-21T20:03:04.2001810Z   sqflite_common 2.5.4 (2.5.8 available)
+2026-05-21T20:03:04.2002044Z   stack_trace 1.11.1 (1.12.1 available)
+2026-05-21T20:03:04.2002271Z   stream_channel 2.1.2 (2.1.4 available)
+2026-05-21T20:03:04.2002510Z   string_scanner 1.2.0 (1.4.1 available)
+2026-05-21T20:03:04.2002744Z   synchronized 3.1.0+1 (3.4.0+1 available)
+2026-05-21T20:03:04.2003129Z   term_glyph 1.2.1 (1.2.2 available)
+2026-05-21T20:03:04.2003355Z   test_api 0.6.1 (0.7.12 available)
+2026-05-21T20:03:04.2003577Z   timing 1.0.1 (1.0.2 available)
+2026-05-21T20:03:04.2003925Z   typed_data 1.3.2 (1.4.0 available)
+2026-05-21T20:03:04.2004147Z   url_launcher 6.3.1 (6.3.2 available)
+2026-05-21T20:03:04.2004391Z   url_launcher_android 6.3.2 (6.3.30 available)
+2026-05-21T20:03:04.2004642Z   url_launcher_ios 6.3.2 (6.4.1 available)
+2026-05-21T20:03:04.2004890Z   url_launcher_linux 3.2.1 (3.2.2 available)
+2026-05-21T20:03:04.2005199Z   url_launcher_macos 3.2.2 (3.2.5 available)
+2026-05-21T20:03:04.2005903Z   url_launcher_web 2.2.3 (2.4.3 available)
+2026-05-21T20:03:04.2006360Z   url_launcher_windows 3.1.3 (3.1.5 available)
+2026-05-21T20:03:04.2006817Z   vector_graphics 1.1.11+1 (1.2.2 available)
+2026-05-21T20:03:04.2007279Z   vector_graphics_codec 1.1.11+1 (1.1.13 available)
+2026-05-21T20:03:04.2007793Z   vector_graphics_compiler 1.1.11+1 (1.2.3 available)
+2026-05-21T20:03:04.2008260Z   vector_math 2.1.4 (2.3.0 available)
+2026-05-21T20:03:04.2008651Z   vm_service 13.0.0 (15.2.0 available)
+2026-05-21T20:03:04.2009044Z   watcher 1.1.4 (1.2.1 available)
+2026-05-21T20:03:04.2009423Z   web 0.4.2 (1.1.1 available)
+2026-05-21T20:03:04.2009667Z   web_socket_channel 2.4.3 (3.0.3 available)
+2026-05-21T20:03:04.2009899Z   win32 5.5.0 (6.2.0 available)
+2026-05-21T20:03:04.2010125Z   xml 6.5.0 (7.0.1 available)
+2026-05-21T20:03:04.2010330Z   yaml 3.1.2 (3.1.3 available)
+2026-05-21T20:03:04.2010540Z Got dependencies!
+2026-05-21T20:03:04.2028842Z 131 packages have newer versions incompatible with dependency constraints.
+2026-05-21T20:03:04.2029398Z Try `flutter pub outdated` for more information.
+2026-05-21T20:03:04.7443205Z ##[group]Run flutter build apk --release
+2026-05-21T20:03:04.7443536Z [36;1mflutter build apk --release[0m
+2026-05-21T20:03:04.7476608Z shell: /usr/bin/bash -e {0}
+2026-05-21T20:03:04.7476829Z env:
+2026-05-21T20:03:04.7477065Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:03:04.7477461Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.19-10/x64
+2026-05-21T20:03:04.7477859Z   FLUTTER_ROOT: /opt/hostedtoolcache/flutter/stable-3.19.0-x64/flutter
+2026-05-21T20:03:04.7478210Z   PUB_CACHE: /home/runner/.pub-cache
+2026-05-21T20:03:04.7478435Z ##[endgroup]
+2026-05-21T20:03:05.4108063Z 
+2026-05-21T20:04:56.8287782Z Running Gradle task 'assembleRelease'...                        
+2026-05-21T20:04:56.8288926Z Checking the license for package Android SDK Build-Tools 30.0.3 in /usr/local/lib/android/sdk/licenses
+2026-05-21T20:04:56.8291993Z License for package Android SDK Build-Tools 30.0.3 accepted.
+2026-05-21T20:04:56.8293249Z Preparing "Install Android SDK Build-Tools 30.0.3 (revision: 30.0.3)".
+2026-05-21T20:04:57.8135923Z "Install Android SDK Build-Tools 30.0.3 (revision: 30.0.3)" ready.
+2026-05-21T20:04:57.8139450Z Installing Android SDK Build-Tools 30.0.3 in /usr/local/lib/android/sdk/build-tools/30.0.3
+2026-05-21T20:04:57.8140339Z "Install Android SDK Build-Tools 30.0.3 (revision: 30.0.3)" complete.
+2026-05-21T20:04:58.0156626Z "Install Android SDK Build-Tools 30.0.3 (revision: 30.0.3)" finished.
+2026-05-21T20:04:58.1137489Z Checking the license for package Android SDK Platform 33 in /usr/local/lib/android/sdk/licenses
+2026-05-21T20:04:58.1141761Z License for package Android SDK Platform 33 accepted.
+2026-05-21T20:04:58.1142686Z Preparing "Install Android SDK Platform 33 (revision: 3)".
+2026-05-21T20:05:00.9140418Z "Install Android SDK Platform 33 (revision: 3)" ready.
+2026-05-21T20:05:00.9148902Z Installing Android SDK Platform 33 in /usr/local/lib/android/sdk/platforms/android-33
+2026-05-21T20:05:00.9150085Z "Install Android SDK Platform 33 (revision: 3)" complete.
+2026-05-21T20:05:00.9150907Z "Install Android SDK Platform 33 (revision: 3)" finished.
+2026-05-21T20:05:01.1137555Z Checking the license for package Android SDK Platform 31 in /usr/local/lib/android/sdk/licenses
+2026-05-21T20:05:01.1139346Z License for package Android SDK Platform 31 accepted.
+2026-05-21T20:05:01.1139803Z Preparing "Install Android SDK Platform 31 (revision: 1)".
+2026-05-21T20:05:03.4140677Z "Install Android SDK Platform 31 (revision: 1)" ready.
+2026-05-21T20:05:03.4142471Z Installing Android SDK Platform 31 in /usr/local/lib/android/sdk/platforms/android-31
+2026-05-21T20:05:03.4143444Z "Install Android SDK Platform 31 (revision: 1)" complete.
+2026-05-21T20:05:03.5136357Z "Install Android SDK Platform 31 (revision: 1)" finished.
+2026-05-21T20:05:03.5137697Z Checking the license for package Android SDK Platform 29 in /usr/local/lib/android/sdk/licenses
+2026-05-21T20:05:03.5138969Z License for package Android SDK Platform 29 accepted.
+2026-05-21T20:05:03.5139649Z Preparing "Install Android SDK Platform 29 (revision: 5)".
+2026-05-21T20:05:06.0134024Z "Install Android SDK Platform 29 (revision: 5)" ready.
+2026-05-21T20:05:06.0135589Z Installing Android SDK Platform 29 in /usr/local/lib/android/sdk/platforms/android-29
+2026-05-21T20:05:06.0137651Z "Install Android SDK Platform 29 (revision: 5)" complete.
+2026-05-21T20:05:06.1137565Z "Install Android SDK Platform 29 (revision: 5)" finished.
+2026-05-21T20:05:21.3154989Z Note: Some input files use or override a deprecated API.
+2026-05-21T20:05:21.3156380Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-21T20:05:24.1136068Z Note: Some input files use or override a deprecated API.
+2026-05-21T20:05:24.1142001Z Note: Recompile with -Xlint:deprecation for details.
+2026-05-21T20:05:24.1144031Z Note: /home/runner/.pub-cache/hosted/pub.dev/firebase_messaging-14.7.19/android/src/main/java/io/flutter/plugins/firebase/messaging/FlutterFirebaseMessagingPlugin.java uses unchecked or unsafe operations.
+2026-05-21T20:05:24.1146683Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-21T20:05:26.8155501Z Note: /home/runner/.pub-cache/hosted/pub.dev/google_mlkit_commons-0.6.1/android/src/main/java/com/google_mlkit_commons/InputImageConverter.java uses unchecked or unsafe operations.
+2026-05-21T20:05:26.8186481Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-21T20:05:30.0136932Z Note: /home/runner/.pub-cache/hosted/pub.dev/google_mlkit_text_recognition-0.11.0/android/src/main/java/com/google_mlkit_text_recognition/TextRecognizer.java uses unchecked or unsafe operations.
+2026-05-21T20:05:30.0144763Z Note: Recompile with -Xlint:unchecked for details.
+2026-05-21T20:06:04.0157248Z Font asset "CupertinoIcons.ttf" was tree-shaken, reducing it from 257628 to 848 bytes (99.7% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+2026-05-21T20:06:04.0166941Z Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 9536 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+2026-05-21T20:06:25.8177443Z e: /home/runner/work/motors-express/motors-express/mobile/android/app/src/main/kotlin/com/driverai/driver_ai/OverlayManager.kt: (64, 70): Type mismatch: inferred type is Boolean but Double was expected
+2026-05-21T20:06:25.8186794Z e: /home/runner/work/motors-express/motors-express/mobile/android/app/src/main/kotlin/com/driverai/driver_ai/OverlayManager.kt: (64, 80): Type mismatch: inferred type is String but Boolean was expected
+2026-05-21T20:06:25.8189246Z e: /home/runner/work/motors-express/motors-express/mobile/android/app/src/main/kotlin/com/driverai/driver_ai/OverlayManager.kt: (64, 88): Type mismatch: inferred type is Double but String was expected
+2026-05-21T20:06:25.8191626Z e: /home/runner/work/motors-express/motors-express/mobile/android/app/src/main/kotlin/com/driverai/driver_ai/OverlayManager.kt: (64, 109): Type mismatch: inferred type is String but Double was expected
+2026-05-21T20:06:25.8193892Z e: /home/runner/work/motors-express/motors-express/mobile/android/app/src/main/kotlin/com/driverai/driver_ai/OverlayManager.kt: (64, 117): No value passed for parameter 'platform'
+2026-05-21T20:06:25.8196305Z e: /home/runner/work/motors-express/motors-express/mobile/android/app/src/main/kotlin/com/driverai/driver_ai/RideDetectorService.kt: (182, 13): Cannot find a parameter with this name: fuelCost
+2026-05-21T20:06:26.2133539Z 
+2026-05-21T20:06:26.2147575Z FAILURE: Build failed with an exception.
+2026-05-21T20:06:26.2148704Z 
+2026-05-21T20:06:26.2149306Z * What went wrong:
+2026-05-21T20:06:26.2149793Z Execution failed for task ':app:compileReleaseKotlin'.
+2026-05-21T20:06:26.2151003Z > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+2026-05-21T20:06:26.2152170Z    > Compilation error. See log for more details
+2026-05-21T20:06:26.2152493Z 
+2026-05-21T20:06:26.2152610Z * Try:
+2026-05-21T20:06:26.2152998Z > Run with --stacktrace option to get the stack trace.
+2026-05-21T20:06:26.2153649Z > Run with --info or --debug option to get more log output.
+2026-05-21T20:06:26.2154212Z > Run with --scan to get full insights.
+2026-05-21T20:06:26.2154525Z 
+2026-05-21T20:06:26.2154724Z * Get more help at https://help.gradle.org
+2026-05-21T20:06:26.2155052Z 
+2026-05-21T20:06:26.2155167Z BUILD FAILED in 3m 20s
+2026-05-21T20:06:26.6722887Z Running Gradle task 'assembleRelease'...                          201.2s
+2026-05-21T20:06:26.6766077Z Gradle task assembleRelease failed with exit code 1
+2026-05-21T20:06:26.6834507Z ##[error]Process completed with exit code 1.
+2026-05-21T20:06:26.6991449Z Post job cleanup.
+2026-05-21T20:06:26.7046341Z Post job cleanup.
+2026-05-21T20:06:26.8917657Z Post job cleanup.
+2026-05-21T20:06:26.9882979Z [command]/usr/bin/git version
+2026-05-21T20:06:26.9920586Z git version 2.54.0
+2026-05-21T20:06:26.9967103Z Temporarily overriding HOME='/home/runner/work/_temp/0d64a18e-0277-4f90-a7ca-b56fb9b7d9a4' before making global git config changes
+2026-05-21T20:06:26.9968644Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-21T20:06:26.9973941Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/motors-express/motors-express
+2026-05-21T20:06:27.0023323Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-21T20:06:27.0058011Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-21T20:06:27.0287480Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-21T20:06:27.0313106Z http.https://github.com/.extraheader
+2026-05-21T20:06:27.0326852Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-05-21T20:06:27.0356646Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-21T20:06:27.0575207Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-21T20:06:27.0607542Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-21T20:06:27.0938999Z Cleaning up orphan processes
+2026-05-21T20:06:27.1257057Z Terminate orphan process: pid (2785) (java)
+2026-05-21T20:06:27.1324429Z Terminate orphan process: pid (3112) (java)
+2026-05-21T20:06:27.1342257Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

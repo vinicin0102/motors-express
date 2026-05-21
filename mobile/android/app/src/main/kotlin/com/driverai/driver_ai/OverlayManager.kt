@@ -37,6 +37,7 @@ class OverlayManager(private val context: Context) {
     fun show(
         valuePerKm: Double,
         estimatedProfit: Double,
+        fuelCost: Double,
         compensa: Boolean,
         rating: String,
         rideValue: Double,
@@ -61,7 +62,7 @@ class OverlayManager(private val context: Context) {
             y = dpToPx(80)
         }
 
-        overlayView = createOverlayView(valuePerKm, estimatedProfit, compensa, rating, rideValue, distance, platform)
+        overlayView = createOverlayView(valuePerKm, estimatedProfit, fuelCost, compensa, rating, rideValue, distance, platform)
 
         try {
             windowManager?.addView(overlayView, params)
